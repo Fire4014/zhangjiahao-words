@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>张佳昊今天背单词了没</title>
+  <link rel="preconnect" href="https://fonts.loli.net" />
+  <link href="https://fonts.loli.net/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- 顶部栏 -->
+    <header class="topbar">
+      <div class="topbar-title">📚 张佳昊今天背单词了没</div>
+      <div class="topbar-actions">
+        <button id="btn-notebook" class="chip" type="button" title="错题本">📓 错题本</button>
+        <button id="btn-mute" class="chip" type="button" title="静音开关">🔊 音效开</button>
+      </div>
+    </header>
+
+    <main class="stage">
+      <!-- 开始卡片 -->
+      <section id="screen-start" class="screen active">
+        <div class="card start-card">
+          <h1 class="start-title">张佳昊你准备好了吗？</h1>
+          <div class="start-scene">
+            <div class="start-char">
+              <div class="char-bubble bubble-boy" data-face="boy" data-state="lie">🧑</div>
+              <div class="start-char-name">张佳昊昊</div>
+            </div>
+          </div>
+          <div class="start-buttons">
+            <button id="btn-yes" class="btn btn-primary" type="button">Yes!</button>
+            <button id="btn-ofcourse" class="btn btn-primary btn-alt" type="button">of course!</button>
+          </div>
+          <p class="start-hint">点哪个都一样，反正都要背单词啦～</p>
+        </div>
+      </section>
+
+      <!-- 选关页 -->
+      <section id="screen-levels" class="screen">
+        <h2 class="screen-title">选择关卡</h2>
+        <p class="screen-sub">每关 15 个六级核心词，难度递增</p>
+        <div id="level-list" class="level-list"></div>
+        <button id="btn-back-home" class="btn btn-ghost" type="button">← 回到开始</button>
+      </section>
+
+      <!-- 答题页 -->
+      <section id="screen-quiz" class="screen">
+        <div class="quiz-meta">
+          <span id="quiz-level-label" class="tag">第 1 关</span>
+          <span id="quiz-progress" class="progress-text">1 / 15</span>
+        </div>
+        <div class="progressbar"><div id="quiz-progress-fill" class="progressbar-fill"></div></div>
+
+        <div class="scene">
+          <!-- 张佳昊昊 -->
+          <div class="char char-boy">
+            <div class="char-avatar" id="boy-avatar">
+              <div class="avatar-emoji" data-face="boy" data-state="idle">🧑</div>
+              <img class="avatar-img" data-face="boy" data-state="idle" alt="" hidden />
+            </div>
+            <div class="char-name">张佳昊昊</div>
+            <div class="bonk" id="bonk" hidden>🔨</div>
+            <div class="dizzy-stars" id="dizzy-stars" hidden>💫💫💫</div>
+            <div class="praise-pop" id="praise" hidden></div>
+          </div>
+
+          <!-- 单词卡 -->
+          <div class="word-card" id="word-card">
+            <div class="word-main" id="word-main">abandon</div>
+            <div class="word-phonetic" id="word-phonetic">/əˈbændən/</div>
+            <div class="word-pos" id="word-pos">v.</div>
+          </div>
+        </div>
+
+        <div id="options" class="options"></div>
+
+        <div class="answer-banner" id="answer-banner" hidden>
+          <div class="banner-body" id="banner-body"></div>
+          <button id="btn-continue" class="btn btn-primary" type="button" hidden>继续 →</button>
+        </div>
+      </section>
+
+      <!-- 结算页 -->
+      <section id="screen-result" class="screen">
+        <div class="card result-card">
+          <h2 class="screen-title" id="result-title">本关完成！</h2>
+          <div class="result-score" id="result-score">正确率 100%</div>
+          <div class="result-sub" id="result-sub"></div>
+          <div class="result-wrong" id="result-wrong"></div>
+          <div class="result-buttons">
+            <button id="btn-next-level" class="btn btn-primary" type="button" hidden>下一关 →</button>
+            <button id="btn-retry" class="btn btn-ghost" type="button">重玩本关</button>
+            <button id="btn-levels" class="btn btn-ghost" type="button">回到选关</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 错题本 -->
+      <section id="screen-notebook" class="screen">
+        <h2 class="screen-title">张佳昊的错题本</h2>
+        <p class="screen-sub" id="notebook-summary"></p>
+        <div class="notebook-actions">
+          <button id="btn-export" class="btn btn-ghost" type="button">导出备份</button>
+          <button id="btn-clear" class="btn btn-danger" type="button">清空错题本</button>
+          <button id="btn-notebook-back" class="btn btn-ghost" type="button">← 返回</button>
+        </div>
+        <div id="notebook-list" class="notebook-list"></div>
+      </section>
+    </main>
+
+    <footer class="footer">手机电脑都能玩 · 进度自动保存</footer>
+  </div>
+
+  <!-- 音频占位：本版用 Web Audio 实时合成可爱音效，离线可用；如放入真实音频见 assets/audio/README.md -->
+  <script src="data/words.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
