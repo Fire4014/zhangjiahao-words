@@ -6,7 +6,7 @@
  * ========================================================= */
 
 const WORDS_DATA = (typeof WORDS !== "undefined" ? WORDS : []);
-const LEVEL_COUNT = 4;
+const LEVEL_COUNT = 10;
 const WORDS_PER_LEVEL = 15;
 
 /* ---------- 本地存储 ---------- */
@@ -449,7 +449,7 @@ function renderLevelList() {
 
     card.innerHTML =
       '<div class="level-num">第 ' + n + " 关</div>" +
-      '<div class="level-name">' + ["热身出发", "小试牛刀", "渐入佳境", "终极挑战"][n - 1] + "</div>" +
+      '<div class="level-name">' + ["热身出发", "小试牛刀", "渐入佳境", "稳步提升", "驾轻就熟", "融会贯通", "游刃有余", "出类拔萃", "登峰造极", "终极挑战"][n - 1] + "</div>" +
       '<div class="level-desc">15 个六级词</div>' +
       '<span class="level-badge">' + badge + "</span>";
 
