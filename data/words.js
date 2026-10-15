@@ -1,972 +1,171 @@
 // 《张佳昊今天背单词了没》题库
-// 4 关 × 15 词，共 60 个六级核心词，难度递增。
-// level: 1~4 对应第 1~4 关。
+// 10 关 × 15 词，共 150 个六级核心词。
+// 难度按六级考频划分（常见=简单，越靠后越生僻），每关内首字母混排。
 const WORDS = [
-  // ============ 第 1 关（高频、较易） ============
-  {
-    word: "abandon",
-    phonetic: "/əˈbændən/",
-    pos: "v.",
-    meaning: "放弃；抛弃",
-    forms: "abandons / abandoned / abandoning",
-    derivatives: "abandonment n. 放弃；遗弃",
-    similar: "abundant adj. 丰富的（拼写易混）",
-    antonym: "retain v. 保留",
-    phrases: ["abandon oneself to 沉溺于", "with abandon 尽情地；放纵地"],
-    examples: [
-      { en: "He abandoned the plan halfway.", zh: "他半途放弃了这个计划。" },
-      { en: "The crew had to abandon ship.", zh: "船员们不得不弃船逃生。" }
-    ],
-    level: 1
-  },
-  {
-    word: "absorb",
-    phonetic: "/əbˈzɔːrb/",
-    pos: "v.",
-    meaning: "吸收；使全神贯注",
-    forms: "absorbs / absorbed / absorbing",
-    derivatives: "absorption n. 吸收；专注",
-    similar: "absurd adj. 荒谬的",
-    antonym: "emit v. 发出；排出",
-    phrases: ["be absorbed in 专心于", "absorb knowledge 吸收知识"],
-    examples: [
-      { en: "Plants absorb water through their roots.", zh: "植物通过根部吸收水分。" },
-      { en: "She was absorbed in the novel.", zh: "她全神贯注地读那本小说。" }
-    ],
-    level: 1
-  },
-  {
-    word: "abundant",
-    phonetic: "/əˈbʌndənt/",
-    pos: "adj.",
-    meaning: "丰富的；充裕的",
-    forms: "more abundant / most abundant",
-    derivatives: "abundance n. 丰富；充裕",
-    similar: "abandon v. 放弃",
-    antonym: "scarce adj. 稀缺的",
-    phrases: ["be abundant in 富于……", "an abundant supply 充足的供应"],
-    examples: [
-      { en: "The region is abundant in natural resources.", zh: "该地区自然资源丰富。" },
-      { en: "We have abundant evidence to prove it.", zh: "我们有充足的证据来证明这一点。" }
-    ],
-    level: 1
-  },
-  {
-    word: "accelerate",
-    phonetic: "/əkˈseləreɪt/",
-    pos: "v.",
-    meaning: "加速；促进",
-    forms: "accelerates / accelerated / accelerating",
-    derivatives: "acceleration n. 加速；加速度",
-    similar: "accumulate v. 积累",
-    antonym: "decelerate v. 减速",
-    phrases: ["accelerate growth 促进增长", "accelerate the pace of 加快……的步伐"],
-    examples: [
-      { en: "The car accelerated to overtake.", zh: "汽车加速超车。" },
-      { en: "The reform accelerated economic growth.", zh: "改革促进了经济增长。" }
-    ],
-    level: 1
-  },
-  {
-    word: "accompany",
-    phonetic: "/əˈkʌmpəni/",
-    pos: "v.",
-    meaning: "陪伴；伴随；伴奏",
-    forms: "accompanies / accompanied / accompanying",
-    derivatives: "companion n. 同伴；accompaniment n. 伴随物；伴奏",
-    similar: "accomplish v. 完成",
-    antonym: "abandon v. 抛弃；离开",
-    phrases: ["be accompanied by 由……陪同；伴随", "accompany sb. to 陪某人去……"],
-    examples: [
-      { en: "She accompanied her mother to the hospital.", zh: "她陪母亲去了医院。" },
-      { en: "Strong winds accompanied the heavy rain.", zh: "大雨伴有大风。" }
-    ],
-    level: 1
-  },
-  {
-    word: "accumulate",
-    phonetic: "/əˈkjuːmjəleɪt/",
-    pos: "v.",
-    meaning: "积累；积聚",
-    forms: "accumulates / accumulated / accumulating",
-    derivatives: "accumulation n. 积累",
-    similar: "accurate adj. 准确的",
-    antonym: "disperse v. 散开；消散",
-    phrases: ["accumulate wealth 积累财富", "accumulate experience 积累经验"],
-    examples: [
-      { en: "Dust had accumulated on the shelves.", zh: "架子上积满了灰尘。" },
-      { en: "He accumulated a large fortune.", zh: "他积累了巨额财富。" }
-    ],
-    level: 1
-  },
-  {
-    word: "accurate",
-    phonetic: "/ˈækjərət/",
-    pos: "adj.",
-    meaning: "准确的；精确的",
-    forms: "more accurate / most accurate",
-    derivatives: "accuracy n. 准确性；accurately adv. 准确地",
-    similar: "adequate adj. 足够的",
-    antonym: "inaccurate adj. 不准确的",
-    phrases: ["accurate data 准确的数据", "be accurate in 在……方面准确"],
-    examples: [
-      { en: "The report is accurate and detailed.", zh: "这份报告准确而详尽。" },
-      { en: "We need accurate measurements.", zh: "我们需要精确的测量。" }
-    ],
-    level: 1
-  },
-  {
-    word: "acquire",
-    phonetic: "/əˈkwaɪər/",
-    pos: "v.",
-    meaning: "获得；学到；收购",
-    forms: "acquires / acquired / acquiring",
-    derivatives: "acquisition n. 获得；收购",
-    similar: "inquire v. 询问",
-    antonym: "lose v. 失去",
-    phrases: ["acquire knowledge 获得知识", "acquire a taste for 对……产生兴趣"],
-    examples: [
-      { en: "She acquired a good knowledge of English.", zh: "她掌握了很好的英语知识。" },
-      { en: "The company acquired a rival firm.", zh: "这家公司收购了一家竞争对手。" }
-    ],
-    level: 1
-  },
-  {
-    word: "adapt",
-    phonetic: "/əˈdæpt/",
-    pos: "v.",
-    meaning: "适应；改编",
-    forms: "adapts / adapted / adapting",
-    derivatives: "adaptation n. 适应；改编；adaptable adj. 能适应的",
-    similar: "adopt v. 采用；收养",
-    antonym: "resist v. 抗拒",
-    phrases: ["adapt to 适应", "adapt A for B 为 B 改编 A"],
-    examples: [
-      { en: "It took time to adapt to the new environment.", zh: "适应新环境需要时间。" },
-      { en: "The novel was adapted for the screen.", zh: "这部小说被改编成了影视作品。" }
-    ],
-    level: 1
-  },
-  {
-    word: "adequate",
-    phonetic: "/ˈædɪkwət/",
-    pos: "adj.",
-    meaning: "足够的；适当的",
-    forms: "more adequate / most adequate",
-    derivatives: "adequacy n. 足够；adequately adv. 充分地",
-    similar: "advocate v./n. 拥护；拥护者",
-    antonym: "inadequate adj. 不充分的",
-    phrases: ["be adequate for 足够应付……", "adequate supply 充足的供应"],
-    examples: [
-      { en: "The room has adequate space for ten people.", zh: "这个房间有足够十个人用的空间。" },
-      { en: "His salary is adequate to support the family.", zh: "他的薪水足以养家。" }
-    ],
-    level: 1
-  },
-  {
-    word: "advocate",
-    phonetic: "/ˈædvəkeɪt/",
-    pos: "v./n.",
-    meaning: "提倡；拥护（者）",
-    forms: "advocates / advocated / advocating",
-    derivatives: "advocacy n. 拥护；提倡",
-    similar: "adequate adj. 足够的",
-    antonym: "oppose v. 反对",
-    phrases: ["advocate for 为……辩护；提倡", "a strong advocate of ……的坚定拥护者"],
-    examples: [
-      { en: "Many experts advocate a balanced diet.", zh: "许多专家提倡均衡饮食。" },
-      { en: "He is a strong advocate of reform.", zh: "他是改革的坚定拥护者。" }
-    ],
-    level: 1
-  },
-  {
-    word: "ambiguous",
-    phonetic: "/æmˈbɪɡjuəs/",
-    pos: "adj.",
-    meaning: "含糊的；模棱两可的",
-    forms: "more ambiguous / most ambiguous",
-    derivatives: "ambiguity n. 含糊；歧义；ambiguously adv. 模棱两可地",
-    similar: "ambitious adj. 有雄心的",
-    antonym: "explicit adj. 明确的",
-    phrases: ["an ambiguous answer 模棱两可的回答", "remain ambiguous 仍然含糊不清"],
-    examples: [
-      { en: "His answer was deliberately ambiguous.", zh: "他的回答故意含糊其辞。" },
-      { en: "The contract contains an ambiguous clause.", zh: "合同里有一条模棱两可的条款。" }
-    ],
-    level: 1
-  },
-  {
-    word: "anticipate",
-    phonetic: "/ænˈtɪsɪpeɪt/",
-    pos: "v.",
-    meaning: "预期；预见；预先准备",
-    forms: "anticipates / anticipated / anticipating",
-    derivatives: "anticipation n. 预期；期待",
-    similar: "participate v. 参加",
-    antonym: "overlook v. 忽视",
-    phrases: ["anticipate doing sth. 预期做某事", "as anticipated 如预期那样"],
-    examples: [
-      { en: "We anticipate that demand will grow.", zh: "我们预计需求将会增长。" },
-      { en: "He anticipated the question and answered first.", zh: "他预料到这个问题，抢先回答了。" }
-    ],
-    level: 1
-  },
-  {
-    word: "apparent",
-    phonetic: "/əˈpærənt/",
-    pos: "adj.",
-    meaning: "明显的；表面上的",
-    forms: "more apparent / most apparent",
-    derivatives: "apparently adv. 显然；表面上",
-    similar: "appoint v. 任命",
-    antonym: "hidden adj. 隐藏的",
-    phrases: ["be apparent to 对……而言很明显", "for no apparent reason 无缘无故地"],
-    examples: [
-      { en: "It was apparent that she was tired.", zh: "显然她累了。" },
-      { en: "His apparent calm hid his real anger.", zh: "他表面的平静掩盖了真实的愤怒。" }
-    ],
-    level: 1
-  },
-  {
-    word: "appeal",
-    phonetic: "/əˈpiːl/",
-    pos: "v./n.",
-    meaning: "呼吁；吸引；上诉",
-    forms: "appeals / appealed / appealing",
-    derivatives: "appealing adj. 有吸引力的；恳求的",
-    similar: "appear v. 出现",
-    antonym: "repel v. 排斥；使厌恶",
-    phrases: ["appeal to 吸引；呼吁；上诉", "make an appeal 发出呼吁"],
-    examples: [
-      { en: "The design appeals to young people.", zh: "这个设计很吸引年轻人。" },
-      { en: "They appealed to the public for help.", zh: "他们呼吁公众提供帮助。" }
-    ],
-    level: 1
-  },
+  // ===== 第 1 关（最常考、最基础） =====
+  { word:"abandon", phonetic:"/əˈbændən/", pos:"v.", meaning:"放弃；抛弃", forms:"abandons / abandoned / abandoning", derivatives:"abandonment n. 放弃；遗弃", similar:"abundant adj. 丰富的", antonym:"retain v. 保留", phrases:["abandon oneself to 沉溺于","with abandon 尽情地"], examples:[{en:"He abandoned the plan halfway.",zh:"他半途放弃了这个计划。"},{en:"The crew had to abandon ship.",zh:"船员们不得不弃船逃生。"}], level:1 },
+  { word:"acquire", phonetic:"/əˈkwaɪər/", pos:"v.", meaning:"获得；学到", forms:"acquires / acquired / acquiring", derivatives:"acquisition n. 获得；收购", similar:"inquire v. 询问", antonym:"lose v. 失去", phrases:["acquire knowledge 获得知识","acquire a taste for 对……产生兴趣"], examples:[{en:"She acquired a good knowledge of English.",zh:"她掌握了很好的英语知识。"},{en:"The company acquired a rival firm.",zh:"这家公司收购了一家竞争对手。"}], level:1 },
+  { word:"adapt", phonetic:"/əˈdæpt/", pos:"v.", meaning:"适应；改编", forms:"adapts / adapted / adapting", derivatives:"adaptation n. 适应；改编", similar:"adopt v. 采用；收养", antonym:"resist v. 抗拒", phrases:["adapt to 适应","adapt A for B 为 B 改编 A"], examples:[{en:"It took time to adapt to the new environment.",zh:"适应新环境需要时间。"},{en:"The novel was adapted for the screen.",zh:"这部小说被改编成了影视作品。"}], level:1 },
+  { word:"appeal", phonetic:"/əˈpiːl/", pos:"v./n.", meaning:"呼吁；吸引；上诉", forms:"appeals / appealed / appealing", derivatives:"appealing adj. 有吸引力的", similar:"appear v. 出现", antonym:"repel v. 排斥", phrases:["appeal to 吸引；呼吁","make an appeal 发出呼吁"], examples:[{en:"The design appeals to young people.",zh:"这个设计很吸引年轻人。"},{en:"They appealed to the public for help.",zh:"他们呼吁公众提供帮助。"}], level:1 },
+  { word:"capacity", phonetic:"/kəˈpæsəti/", pos:"n.", meaning:"容量；能力", forms:"capacities", derivatives:"capable adj. 有能力的", similar:"capability n. 能力", antonym:"inability n. 无能力", phrases:["the capacity to do sth. 做某事的能力","at full capacity 满负荷"], examples:[{en:"The hall has a seating capacity of 2,000.",zh:"这个大厅能容纳两千人。"},{en:"She has a great capacity for learning languages.",zh:"她有很强的语言学习能力。"}], level:1 },
+  { word:"confirm", phonetic:"/kənˈfɜːrm/", pos:"v.", meaning:"确认；证实", forms:"confirms / confirmed / confirming", derivatives:"confirmation n. 确认", similar:"conform v. 遵守", antonym:"deny v. 否认", phrases:["confirm a booking 确认预订","confirm that 证实"], examples:[{en:"Please confirm your order by phone.",zh:"请通过电话确认您的订单。"},{en:"The results confirmed our theory.",zh:"结果证实了我们的理论。"}], level:1 },
+  { word:"decline", phonetic:"/dɪˈklaɪn/", pos:"v./n.", meaning:"下降；衰退；婉拒", forms:"declines / declined / declining", derivatives:"declining adj. 下降的", similar:"incline v. 倾向", antonym:"accept v. 接受", phrases:["decline an invitation 婉拒邀请","on the decline 在下降"], examples:[{en:"Sales declined sharply last year.",zh:"去年销量大幅下降。"},{en:"He politely declined the offer.",zh:"他礼貌地拒绝了这个提议。"}], level:1 },
+  { word:"establish", phonetic:"/ɪˈstæblɪʃ/", pos:"v.", meaning:"建立；确立", forms:"establishes / established / establishing", derivatives:"establishment n. 建立；机构", similar:"stabilize v. 使稳定", antonym:"abolish v. 废除", phrases:["establish a company 建立公司","establish contact 建立联系"], examples:[{en:"The school was established in 1900.",zh:"这所学校建于 1900 年。"},{en:"They established a close friendship.",zh:"他们建立了亲密的友谊。"}], level:1 },
+  { word:"familiar", phonetic:"/fəˈmɪliər/", pos:"adj.", meaning:"熟悉的；通晓的", forms:"more familiar / most familiar", derivatives:"familiarity n. 熟悉", similar:"family n. 家庭", antonym:"unfamiliar adj. 陌生的", phrases:["be familiar with 熟悉","familiar to 为……所熟悉"], examples:[{en:"I am familiar with this software.",zh:"我对这个软件很熟悉。"},{en:"His face looks familiar to me.",zh:"他的脸让我觉得眼熟。"}], level:1 },
+  { word:"generate", phonetic:"/ˈdʒenəreɪt/", pos:"v.", meaning:"产生；生成", forms:"generates / generated / generating", derivatives:"generation n. 产生；一代", similar:"general adj. 普遍的", antonym:"destroy v. 销毁", phrases:["generate electricity 发电","generate interest 引起兴趣"], examples:[{en:"Solar panels generate electricity.",zh:"太阳能板可以发电。"},{en:"The idea generated much discussion.",zh:"这个想法引发了大量讨论。"}], level:1 },
+  { word:"identify", phonetic:"/aɪˈdentɪfaɪ/", pos:"v.", meaning:"识别；确认", forms:"identifies / identified / identifying", derivatives:"identification n. 识别；身份证明", similar:"identity n. 身份", antonym:"confuse v. 混淆", phrases:["identify with 认同","identify the problem 找出问题"], examples:[{en:"Police identified the suspect quickly.",zh:"警方很快确认了嫌疑人。"},{en:"We must identify the root cause.",zh:"我们必须找出根本原因。"}], level:1 },
+  { word:"maintain", phonetic:"/meɪnˈteɪn/", pos:"v.", meaning:"维持；保养；坚持", forms:"maintains / maintained / maintaining", derivatives:"maintenance n. 维护；保养", similar:"remain v. 保持", antonym:"abandon v. 放弃", phrases:["maintain order 维持秩序","maintain that 坚称"], examples:[{en:"It is hard to maintain such a pace.",zh:"很难保持这样的节奏。"},{en:"She maintains that she is innocent.",zh:"她坚称自己是无辜的。"}], level:1 },
+  { word:"obtain", phonetic:"/əbˈteɪn/", pos:"v.", meaning:"获得；得到", forms:"obtains / obtained / obtaining", derivatives:"obtainable adj. 可获得的", similar:"attain v. 达到", antonym:"lose v. 失去", phrases:["obtain permission 获得许可","obtain information 获取信息"], examples:[{en:"You must obtain a visa first.",zh:"你必须先获得签证。"},{en:"He obtained the data through testing.",zh:"他通过测试获取了数据。"}], level:1 },
+  { word:"participate", phonetic:"/pɑːrˈtɪsɪpeɪt/", pos:"v.", meaning:"参加；参与", forms:"participates / participated / participating", derivatives:"participation n. 参与", similar:"anticipate v. 预期", antonym:"withdraw v. 退出", phrases:["participate in 参加","actively participate 积极参与"], examples:[{en:"Everyone can participate in the contest.",zh:"每个人都能参加这次比赛。"},{en:"She actively participated in the debate.",zh:"她积极参加了辩论。"}], level:1 },
+  { word:"reveal", phonetic:"/rɪˈviːl/", pos:"v.", meaning:"揭示；透露", forms:"reveals / revealed / revealing", derivatives:"revelation n. 揭露", similar:"revise v. 修改", antonym:"conceal v. 隐藏", phrases:["reveal the truth 揭露真相","reveal a secret 泄露秘密"], examples:[{en:"The study revealed a surprising fact.",zh:"这项研究揭示了一个惊人的事实。"},{en:"He refused to reveal the source.",zh:"他拒绝透露消息来源。"}], level:1 },
 
-  // ============ 第 2 关 ============
-  {
-    word: "arbitrary",
-    phonetic: "/ˈɑːrbɪtreri/",
-    pos: "adj.",
-    meaning: "任意的；专断的",
-    forms: "more arbitrary / most arbitrary",
-    derivatives: "arbitrarily adv. 任意地；专断地",
-    similar: "auxiliary adj. 辅助的",
-    antonym: "rational adj. 合理的",
-    phrases: ["an arbitrary decision 武断的决定", "arbitrary rules 任意的规则"],
-    examples: [
-      { en: "The choice of color was entirely arbitrary.", zh: "颜色的选择完全是随意的。" },
-      { en: "He made an arbitrary decision without consulting us.", zh: "他不征求我们的意见就做出了武断的决定。" }
-    ],
-    level: 2
-  },
-  {
-    word: "assess",
-    phonetic: "/əˈses/",
-    pos: "v.",
-    meaning: "评估；估价",
-    forms: "assesses / assessed / assessing",
-    derivatives: "assessment n. 评估；估价",
-    similar: "access n. 通道；访问",
-    antonym: "overlook v. 忽视",
-    phrases: ["assess the impact 评估影响", "assess the value 估价"],
-    examples: [
-      { en: "We need to assess the risks first.", zh: "我们需要先评估风险。" },
-      { en: "The damage was assessed at one million dollars.", zh: "损失被评估为一百万美元。" }
-    ],
-    level: 2
-  },
-  {
-    word: "attribute",
-    phonetic: "/əˈtrɪbjuːt/",
-    pos: "v./n.",
-    meaning: "把……归因于；属性",
-    forms: "attributes / attributed / attributing",
-    derivatives: "attribution n. 归因；归属",
-    similar: "contribute v. 贡献；促成",
-    antonym: "deny v. 否认",
-    phrases: ["attribute A to B 把 A 归因于 B", "a key attribute 关键特征"],
-    examples: [
-      { en: "She attributes her success to hard work.", zh: "她把成功归因于勤奋。" },
-      { en: "Patience is an important attribute of a teacher.", zh: "耐心是教师的重要品质。" }
-    ],
-    level: 2
-  },
-  {
-    word: "capacity",
-    phonetic: "/kəˈpæsəti/",
-    pos: "n.",
-    meaning: "容量；能力",
-    forms: "capacities（复数）",
-    derivatives: "capable adj. 有能力的",
-    similar: "capability n. 能力",
-    antonym: "inability n. 无能力",
-    phrases: ["the capacity to do sth. 做某事的能力", "at full capacity 满负荷"],
-    examples: [
-      { en: "The hall has a seating capacity of 2,000.", zh: "这个大厅能容纳两千人。" },
-      { en: "She has a great capacity for learning languages.", zh: "她有很强的语言学习能力。" }
-    ],
-    level: 2
-  },
-  {
-    word: "circulate",
-    phonetic: "/ˈsɜːrkjəleɪt/",
-    pos: "v.",
-    meaning: "循环；流通；传播",
-    forms: "circulates / circulated / circulating",
-    derivatives: "circulation n. 循环；流通；发行量",
-    similar: "circular adj. 圆形的",
-    antonym: "stagnate v. 停滞",
-    phrases: ["circulate among 在……中传播", "circulate blood 促进血液循环"],
-    examples: [
-      { en: "Blood circulates through the body.", zh: "血液在全身循环。" },
-      { en: "Rumors circulated among the staff.", zh: "谣言在员工中流传。" }
-    ],
-    level: 2
-  },
-  {
-    word: "coherent",
-    phonetic: "/koʊˈhɪrənt/",
-    pos: "adj.",
-    meaning: "连贯的；一致的",
-    forms: "more coherent / most coherent",
-    derivatives: "coherence n. 连贯性；一致性",
-    similar: "inherent adj. 固有的",
-    antonym: "incoherent adj. 不连贯的",
-    phrases: ["a coherent argument 连贯的论证", "a coherent whole 连贯的整体"],
-    examples: [
-      { en: "He gave a clear and coherent speech.", zh: "他发表了一篇清晰连贯的演讲。" },
-      { en: "The essay lacks a coherent structure.", zh: "这篇文章缺乏连贯的结构。" }
-    ],
-    level: 2
-  },
-  {
-    word: "coincide",
-    phonetic: "/ˌkoʊɪnˈsaɪd/",
-    pos: "v.",
-    meaning: "同时发生；巧合；一致",
-    forms: "coincides / coincided / coinciding",
-    derivatives: "coincidence n. 巧合；一致",
-    similar: "collide v. 碰撞",
-    antonym: "differ v. 不同",
-    phrases: ["coincide with 与……同时发生；与……一致"],
-    examples: [
-      { en: "My holiday coincides with the festival.", zh: "我的假期恰逢这个节日。" },
-      { en: "Their interests coincide on this issue.", zh: "他们在这个问题上利益一致。" }
-    ],
-    level: 2
-  },
-  {
-    word: "collapse",
-    phonetic: "/kəˈlæps/",
-    pos: "v./n.",
-    meaning: "倒塌；崩溃；晕倒",
-    forms: "collapses / collapsed / collapsing",
-    derivatives: "collapsible adj. 可折叠的",
-    similar: "collide v. 碰撞",
-    antonym: "stand v. 矗立；屹立",
-    phrases: ["collapse into 倒塌成……", "on the verge of collapse 濒临崩溃"],
-    examples: [
-      { en: "The bridge collapsed in the flood.", zh: "这座桥在洪水中倒塌了。" },
-      { en: "He collapsed from exhaustion.", zh: "他因疲惫而晕倒。" }
-    ],
-    level: 2
-  },
-  {
-    word: "commence",
-    phonetic: "/kəˈmens/",
-    pos: "v.",
-    meaning: "开始；着手",
-    forms: "commences / commenced / commencing",
-    derivatives: "commencement n. 开始；毕业典礼",
-    similar: "commerce n. 商业",
-    antonym: "cease v. 停止",
-    phrases: ["commence doing sth. 开始做某事", "commence with 以……开始"],
-    examples: [
-      { en: "The ceremony will commence at nine.", zh: "典礼将于九点开始。" },
-      { en: "We commenced work on the project.", zh: "我们开始了这个项目的工作。" }
-    ],
-    level: 2
-  },
-  {
-    word: "compensate",
-    phonetic: "/ˈkɑːmpenseɪt/",
-    pos: "v.",
-    meaning: "补偿；赔偿",
-    forms: "compensates / compensated / compensating",
-    derivatives: "compensation n. 补偿；赔偿金",
-    similar: "condense v. 浓缩",
-    antonym: "deprive v. 剥夺",
-    phrases: ["compensate for 弥补；补偿", "compensate sb. for sth. 因……赔偿某人"],
-    examples: [
-      { en: "Nothing can compensate for the loss of time.", zh: "时间的损失无法弥补。" },
-      { en: "The company compensated workers for overtime.", zh: "公司因加班补偿了工人。" }
-    ],
-    level: 2
-  },
-  {
-    word: "comprehensive",
-    phonetic: "/ˌkɑːmprɪˈhensɪv/",
-    pos: "adj.",
-    meaning: "全面的；综合的",
-    forms: "more comprehensive / most comprehensive",
-    derivatives: "comprehensively adv. 全面地",
-    similar: "comprehensible adj. 可理解的",
-    antonym: "partial adj. 部分的",
-    phrases: ["a comprehensive review 全面的审查", "comprehensive coverage 全面覆盖"],
-    examples: [
-      { en: "The book gives a comprehensive overview of history.", zh: "这本书对历史做了全面概述。" },
-      { en: "We made a comprehensive plan.", zh: "我们制定了一个全面的计划。" }
-    ],
-    level: 2
-  },
-  {
-    word: "conceive",
-    phonetic: "/kənˈsiːv/",
-    pos: "v.",
-    meaning: "构想；设想；怀孕",
-    forms: "conceives / conceived / conceiving",
-    derivatives: "conception n. 构想；怀孕；conceivable adj. 可想象的",
-    similar: "deceive v. 欺骗",
-    antonym: "dismiss v. 不再考虑",
-    phrases: ["conceive of 想象；设想", "conceive a plan 构思一个计划"],
-    examples: [
-      { en: "It is hard to conceive of life without the Internet.", zh: "很难想象没有互联网的生活。" },
-      { en: "She conceived the idea for the novel.", zh: "她构思了这部小说的想法。" }
-    ],
-    level: 2
-  },
-  {
-    word: "condemn",
-    phonetic: "/kənˈdem/",
-    pos: "v.",
-    meaning: "谴责；判刑",
-    forms: "condemns / condemned / condemning",
-    derivatives: "condemnation n. 谴责；定罪",
-    similar: "condense v. 浓缩",
-    antonym: "praise v. 赞扬",
-    phrases: ["condemn sb. for 因……谴责某人", "be condemned to death 被判处死刑"],
-    examples: [
-      { en: "The government condemned the attack.", zh: "政府谴责了这次袭击。" },
-      { en: "He was condemned to five years in prison.", zh: "他被判处五年监禁。" }
-    ],
-    level: 2
-  },
-  {
-    word: "confront",
-    phonetic: "/kənˈfrʌnt/",
-    pos: "v.",
-    meaning: "面对；对抗；对峙",
-    forms: "confronts / confronted / confronting",
-    derivatives: "confrontation n. 对抗；冲突",
-    similar: "confirm v. 确认",
-    antonym: "avoid v. 回避",
-    phrases: ["be confronted with 面对", "confront difficulties 面对困难"],
-    examples: [
-      { en: "We must confront the problem directly.", zh: "我们必须直接面对这个问题。" },
-      { en: "She was confronted with a difficult choice.", zh: "她面临一个艰难的选择。" }
-    ],
-    level: 2
-  },
-  {
-    word: "constitute",
-    phonetic: "/ˈkɑːnstɪtuːt/",
-    pos: "v.",
-    meaning: "构成；组成",
-    forms: "constitutes / constituted / constituting",
-    derivatives: "constitution n. 构成；宪法；体质",
-    similar: "substitute v. 代替",
-    antonym: "dissolve v. 解散",
-    phrases: ["constitute a threat 构成威胁", "constitute a majority 占多数"],
-    examples: [
-      { en: "Women constitute nearly half of the workforce.", zh: "女性占劳动力的近一半。" },
-      { en: "This constitutes a serious threat to safety.", zh: "这对安全构成了严重威胁。" }
-    ],
-    level: 2
-  },
+  // ===== 第 2 关 =====
+  { word:"accelerate", phonetic:"/əkˈseləreɪt/", pos:"v.", meaning:"加速；促进", forms:"accelerates / accelerated / accelerating", derivatives:"acceleration n. 加速", similar:"accumulate v. 积累", antonym:"decelerate v. 减速", phrases:["accelerate growth 促进增长","accelerate the pace 加快步伐"], examples:[{en:"The car accelerated to overtake.",zh:"汽车加速超车。"},{en:"The reform accelerated growth.",zh:"改革促进了增长。"}], level:2 },
+  { word:"accompany", phonetic:"/əˈkʌmpəni/", pos:"v.", meaning:"陪伴；伴随", forms:"accompanies / accompanied / accompanying", derivatives:"companion n. 同伴", similar:"accomplish v. 完成", antonym:"abandon v. 抛弃", phrases:["be accompanied by 由……陪同；伴随","accompany sb. to 陪某人去……"], examples:[{en:"She accompanied her mother home.",zh:"她陪母亲回家。"},{en:"Heavy rain accompanied the storm.",zh:"暴风雨伴有大雨。"}], level:2 },
+  { word:"accurate", phonetic:"/ˈækjərət/", pos:"adj.", meaning:"准确的；精确的", forms:"more accurate / most accurate", derivatives:"accuracy n. 准确性", similar:"adequate adj. 足够的", antonym:"inaccurate adj. 不准确的", phrases:["accurate data 准确的数据","be accurate in 在……方面准确"], examples:[{en:"The report is accurate and detailed.",zh:"这份报告准确而详尽。"},{en:"We need accurate measurements.",zh:"我们需要精确的测量。"}], level:2 },
+  { word:"adjust", phonetic:"/əˈdʒʌst/", pos:"v.", meaning:"调整；适应", forms:"adjusts / adjusted / adjusting", derivatives:"adjustment n. 调整", similar:"adopt v. 采用", antonym:"fix v. 固定", phrases:["adjust to 适应","adjust the plan 调整计划"], examples:[{en:"You can adjust the seat height.",zh:"你可以调整座椅高度。"},{en:"It takes time to adjust to a new city.",zh:"适应一座新城市需要时间。"}], level:2 },
+  { word:"circulate", phonetic:"/ˈsɜːrkjəleɪt/", pos:"v.", meaning:"循环；传播", forms:"circulates / circulated / circulating", derivatives:"circulation n. 循环；发行量", similar:"circular adj. 圆形的", antonym:"stagnate v. 停滞", phrases:["circulate among 在……中传播","circulate blood 促进血液循环"], examples:[{en:"Blood circulates through the body.",zh:"血液在全身循环。"},{en:"Rumors circulated quickly.",zh:"谣言迅速传开。"}], level:2 },
+  { word:"constitute", phonetic:"/ˈkɑːnstɪtuːt/", pos:"v.", meaning:"构成；组成", forms:"constitutes / constituted / constituting", derivatives:"constitution n. 构成；宪法", similar:"substitute v. 代替", antonym:"dissolve v. 解散", phrases:["constitute a threat 构成威胁","constitute a majority 占多数"], examples:[{en:"Women constitute half of the staff.",zh:"女性占员工的一半。"},{en:"This constitutes a serious risk.",zh:"这构成了严重风险。"}], level:2 },
+  { word:"determine", phonetic:"/dɪˈtɜːrmɪn/", pos:"v.", meaning:"决定；查明", forms:"determines / determined / determining", derivatives:"determination n. 决心", similar:"terminate v. 终止", antonym:"hesitate v. 犹豫", phrases:["determine to do 决心做","be determined to 决心"], examples:[{en:"Your attitude determines your future.",zh:"你的态度决定你的未来。"},{en:"They determined the cause of the fire.",zh:"他们查明了火灾原因。"}], level:2 },
+  { word:"eliminate", phonetic:"/ɪˈlɪmɪneɪt/", pos:"v.", meaning:"消除；淘汰", forms:"eliminates / eliminated / eliminating", derivatives:"elimination n. 消除；淘汰", similar:"illuminate v. 阐明", antonym:"retain v. 保留", phrases:["eliminate errors 消除错误","be eliminated from 被淘汰出"], examples:[{en:"The system eliminates many errors.",zh:"这个系统消除了许多错误。"},{en:"They were eliminated in the first round.",zh:"他们在第一轮就被淘汰了。"}], level:2 },
+  { word:"emphasize", phonetic:"/ˈemfəsaɪz/", pos:"v.", meaning:"强调；重视", forms:"emphasizes / emphasized / emphasizing", derivatives:"emphasis n. 强调；重点", similar:"empathize v. 产生共鸣", antonym:"ignore v. 忽视", phrases:["emphasize the importance 强调重要性","cannot emphasize...too much 再怎么强调也不为过"], examples:[{en:"The teacher emphasized the importance of practice.",zh:"老师强调了练习的重要性。"},{en:"I must emphasize that safety comes first.",zh:"我必须强调安全第一。"}], level:2 },
+  { word:"flexible", phonetic:"/ˈfleksəbl/", pos:"adj.", meaning:"灵活的；柔韧的", forms:"more flexible / most flexible", derivatives:"flexibility n. 灵活性", similar:"complex adj. 复杂的", antonym:"rigid adj. 死板的", phrases:["flexible hours 弹性工作时间","a flexible plan 灵活的计划"], examples:[{en:"We offer flexible working hours.",zh:"我们提供弹性工作时间。"},{en:"Stay flexible and open-minded.",zh:"保持灵活和开放的心态。"}], level:2 },
+  { word:"hesitate", phonetic:"/ˈhezɪteɪt/", pos:"v.", meaning:"犹豫；踌躇", forms:"hesitates / hesitated / hesitating", derivatives:"hesitation n. 犹豫", similar:"inherit v. 继承", antonym:"decide v. 决定", phrases:["hesitate to do sth. 犹豫做某事","without hesitation 毫不犹豫"], examples:[{en:"Don't hesitate to ask for help.",zh:"需要帮助时不要犹豫。"},{en:"She hesitated before answering.",zh:"她回答前犹豫了一下。"}], level:2 },
+  { word:"impress", phonetic:"/ɪmˈpres/", pos:"v.", meaning:"给……深刻印象", forms:"impresses / impressed / impressing", derivatives:"impression n. 印象", similar:"express v. 表达", antonym:"bore v. 使厌烦", phrases:["be impressed by 被……打动","impress sb. with 用……打动某人"], examples:[{en:"Her speech impressed everyone.",zh:"她的演讲打动了所有人。"},{en:"I was impressed by his honesty.",zh:"他的诚实给我留下深刻印象。"}], level:2 },
+  { word:"motivate", phonetic:"/ˈmoʊtɪveɪt/", pos:"v.", meaning:"激励；促使", forms:"motivates / motivated / motivating", derivatives:"motivation n. 动机", similar:"moderate v. 缓和", antonym:"discourage v. 打击", phrases:["motivate sb. to do 激励某人做","be motivated by 受……驱使"], examples:[{en:"Good leaders motivate their team.",zh:"优秀的领导者激励团队。"},{en:"He was motivated by curiosity.",zh:"他受好奇心驱使。"}], level:2 },
+  { word:"preserve", phonetic:"/prɪˈzɜːrv/", pos:"v.", meaning:"保存；保护", forms:"preserves / preserved / preserving", derivatives:"preservation n. 保存", similar:"reserve v. 预订", antonym:"destroy v. 破坏", phrases:["preserve the environment 保护环境","preserve tradition 保存传统"], examples:[{en:"We must preserve these old buildings.",zh:"我们必须保护这些老建筑。"},{en:"Salt helps preserve food.",zh:"盐有助于保存食物。"}], level:2 },
+  { word:"resist", phonetic:"/rɪˈzɪst/", pos:"v.", meaning:"抵抗；抵制", forms:"resists / resisted / resisting", derivatives:"resistance n. 抵抗", similar:"assist v. 协助", antonym:"yield v. 屈服", phrases:["resist temptation 抵制诱惑","resist the urge 克制冲动"], examples:[{en:"She could not resist the temptation.",zh:"她无法抵抗诱惑。"},{en:"They resisted the new policy.",zh:"他们抵制新政策。"}], level:2 },
 
-  // ============ 第 3 关 ============
-  {
-    word: "contradict",
-    phonetic: "/ˌkɑːntrəˈdɪkt/",
-    pos: "v.",
-    meaning: "反驳；与……矛盾",
-    forms: "contradicts / contradicted / contradicting",
-    derivatives: "contradiction n. 矛盾；反驳；contradictory adj. 相互矛盾的",
-    similar: "contract n. 合同；v. 收缩",
-    antonym: "confirm v. 证实",
-    phrases: ["contradict oneself 自相矛盾", "contradict the evidence 与证据矛盾"],
-    examples: [
-      { en: "His actions contradict his words.", zh: "他的行为与言语相矛盾。" },
-      { en: "Don't contradict your teacher in class.", zh: "别在课堂上顶撞老师。" }
-    ],
-    level: 3
-  },
-  {
-    word: "controversy",
-    phonetic: "/ˈkɑːntrəvɜːrsi/",
-    pos: "n.",
-    meaning: "争议；争论",
-    forms: "controversies（复数）",
-    derivatives: "controversial adj. 有争议的",
-    similar: "conversely adv. 相反地",
-    antonym: "consensus n. 共识",
-    phrases: ["cause controversy 引发争议", "a heated controversy 激烈的争论"],
-    examples: [
-      { en: "The decision caused great controversy.", zh: "这个决定引起了很大争议。" },
-      { en: "There is controversy over the new policy.", zh: "新政策存在争议。" }
-    ],
-    level: 3
-  },
-  {
-    word: "criterion",
-    phonetic: "/kraɪˈtɪriən/",
-    pos: "n.",
-    meaning: "标准；准则",
-    forms: "criteria（复数）",
-    derivatives: "critical adj. 关键的；批判的",
-    similar: "criticism n. 批评",
-    antonym: "—",
-    phrases: ["meet the criterion 符合标准", "a criterion for ……的标准"],
-    examples: [
-      { en: "The main criterion for success is quality.", zh: "成功的主要标准是质量。" },
-      { en: "What criteria do you use to judge?", zh: "你用什么标准来判断？" }
-    ],
-    level: 3
-  },
-  {
-    word: "dedicate",
-    phonetic: "/ˈdedɪkeɪt/",
-    pos: "v.",
-    meaning: "奉献；致力于",
-    forms: "dedicates / dedicated / dedicating",
-    derivatives: "dedication n. 奉献；dedicated adj. 专注的；献身的",
-    similar: "delicate adj. 精致的；脆弱的",
-    antonym: "abandon v. 放弃",
-    phrases: ["dedicate oneself to 献身于", "dedicate A to B 把 A 献给 B"],
-    examples: [
-      { en: "She dedicated her life to education.", zh: "她把一生献给了教育事业。" },
-      { en: "He dedicated the book to his parents.", zh: "他把这本书献给父母。" }
-    ],
-    level: 3
-  },
-  {
-    word: "deteriorate",
-    phonetic: "/dɪˈtɪriəreɪt/",
-    pos: "v.",
-    meaning: "恶化；退化",
-    forms: "deteriorates / deteriorated / deteriorating",
-    derivatives: "deterioration n. 恶化；退化",
-    similar: "determine v. 决定",
-    antonym: "improve v. 改善",
-    phrases: ["deteriorate into 恶化成……", "deteriorate rapidly 迅速恶化"],
-    examples: [
-      { en: "The patient's condition deteriorated overnight.", zh: "病人的病情一夜之间恶化了。" },
-      { en: "Relations between the two countries deteriorated.", zh: "两国关系恶化了。" }
-    ],
-    level: 3
-  },
-  {
-    word: "dilemma",
-    phonetic: "/dɪˈlemə/",
-    pos: "n.",
-    meaning: "困境；进退两难",
-    forms: "dilemmas（复数）",
-    derivatives: "—",
-    similar: "diploma n. 文凭",
-    antonym: "—",
-    phrases: ["be in a dilemma 陷入两难", "face a dilemma 面临两难"],
-    examples: [
-      { en: "She was in a dilemma about whether to go.", zh: "她在去不去的问题上左右为难。" },
-      { en: "The manager faced a moral dilemma.", zh: "经理面临道德困境。" }
-    ],
-    level: 3
-  },
-  {
-    word: "diminish",
-    phonetic: "/dɪˈmɪnɪʃ/",
-    pos: "v.",
-    meaning: "减少；缩小；减弱",
-    forms: "diminishes / diminished / diminishing",
-    derivatives: "diminution n. 减少；缩小",
-    similar: "demolish v. 拆除",
-    antonym: "increase v. 增加",
-    phrases: ["diminish with 随着……减少", "diminish the importance 削弱重要性"],
-    examples: [
-      { en: "The pain gradually diminished.", zh: "疼痛逐渐减轻了。" },
-      { en: "Nothing diminished her enthusiasm.", zh: "什么也无法减弱她的热情。" }
-    ],
-    level: 3
-  },
-  {
-    word: "discriminate",
-    phonetic: "/dɪˈskrɪmɪneɪt/",
-    pos: "v.",
-    meaning: "歧视；区分",
-    forms: "discriminates / discriminated / discriminating",
-    derivatives: "discrimination n. 歧视；区别",
-    similar: "disseminate v. 传播",
-    antonym: "—",
-    phrases: ["discriminate against 歧视", "discriminate between 区分"],
-    examples: [
-      { en: "It is illegal to discriminate against anyone.", zh: "歧视任何人是违法的。" },
-      { en: "Babies can discriminate between colors.", zh: "婴儿能区分颜色。" }
-    ],
-    level: 3
-  },
-  {
-    word: "eliminate",
-    phonetic: "/ɪˈlɪmɪneɪt/",
-    pos: "v.",
-    meaning: "消除；淘汰",
-    forms: "eliminates / eliminated / eliminating",
-    derivatives: "elimination n. 消除；淘汰",
-    similar: "illuminate v. 照亮；阐明",
-    antonym: "retain v. 保留",
-    phrases: ["eliminate errors 消除错误", "be eliminated from 从……中被淘汰"],
-    examples: [
-      { en: "The new system eliminates many errors.", zh: "新系统消除了许多错误。" },
-      { en: "Our team was eliminated in the first round.", zh: "我们队在第一轮就被淘汰了。" }
-    ],
-    level: 3
-  },
-  {
-    word: "emphasize",
-    phonetic: "/ˈemfəsaɪz/",
-    pos: "v.",
-    meaning: "强调；重视",
-    forms: "emphasizes / emphasized / emphasizing",
-    derivatives: "emphasis n. 强调；重点",
-    similar: "empathize v. 产生共鸣",
-    antonym: "ignore v. 忽视",
-    phrases: ["emphasize the importance 强调重要性", "cannot emphasize...too much 再怎么强调也不为过"],
-    examples: [
-      { en: "The teacher emphasized the importance of practice.", zh: "老师强调了练习的重要性。" },
-      { en: "I must emphasize that safety comes first.", zh: "我必须强调安全第一。" }
-    ],
-    level: 3
-  },
-  {
-    word: "endeavor",
-    phonetic: "/ɪnˈdevər/",
-    pos: "v./n.",
-    meaning: "努力；尽力",
-    forms: "endeavors / endeavored / endeavoring",
-    derivatives: "—",
-    similar: "endure v. 忍受",
-    antonym: "abandon v. 放弃",
-    phrases: ["endeavor to do sth. 努力做某事", "make every endeavor 尽一切努力"],
-    examples: [
-      { en: "We endeavor to provide good service.", zh: "我们努力提供优质服务。" },
-      { en: "He made every endeavor to finish on time.", zh: "他尽一切努力按时完成。" }
-    ],
-    level: 3
-  },
-  {
-    word: "enhance",
-    phonetic: "/ɪnˈhæns/",
-    pos: "v.",
-    meaning: "提高；增强",
-    forms: "enhances / enhanced / enhancing",
-    derivatives: "enhancement n. 增强；提高",
-    similar: "enforce v. 执行",
-    antonym: "weaken v. 削弱",
-    phrases: ["enhance efficiency 提高效率", "enhance the quality 提升质量"],
-    examples: [
-      { en: "Exercise can enhance your health.", zh: "锻炼能增进健康。" },
-      { en: "The new design enhances the product's appeal.", zh: "新设计提升了产品的吸引力。" }
-    ],
-    level: 3
-  },
-  {
-    word: "equivalent",
-    phonetic: "/ɪˈkwɪvələnt/",
-    pos: "adj./n.",
-    meaning: "相等的；等价物",
-    forms: "equivalents（复数）",
-    derivatives: "equivalence n. 相等；等价",
-    similar: "evident adj. 明显的",
-    antonym: "different adj. 不同的",
-    phrases: ["be equivalent to 相当于；等同于", "an equivalent of ……的等价物"],
-    examples: [
-      { en: "One mile is equivalent to 1.6 kilometers.", zh: "一英里相当于 1.6 公里。" },
-      { en: "Is there an English equivalent for this word?", zh: "这个词有对应的英语说法吗？" }
-    ],
-    level: 3
-  },
-  {
-    word: "evaluate",
-    phonetic: "/ɪˈvæljueɪt/",
-    pos: "v.",
-    meaning: "评价；评估",
-    forms: "evaluates / evaluated / evaluating",
-    derivatives: "evaluation n. 评价；评估",
-    similar: "evacuate v. 疏散",
-    antonym: "—",
-    phrases: ["evaluate the performance 评估表现", "evaluate the results 评估结果"],
-    examples: [
-      { en: "We need to evaluate the plan carefully.", zh: "我们需要仔细评估这个计划。" },
-      { en: "Teachers evaluate students' progress each term.", zh: "老师每学期评估学生的进步。" }
-    ],
-    level: 3
-  },
-  {
-    word: "exaggerate",
-    phonetic: "/ɪɡˈzædʒəreɪt/",
-    pos: "v.",
-    meaning: "夸大；夸张",
-    forms: "exaggerates / exaggerated / exaggerating",
-    derivatives: "exaggeration n. 夸张；夸大",
-    similar: "exasperate v. 激怒",
-    antonym: "understate v. 轻描淡写",
-    phrases: ["exaggerate the truth 夸大事实", "without exaggeration 毫不夸张地说"],
-    examples: [
-      { en: "Don't exaggerate the difficulties.", zh: "别夸大困难。" },
-      { en: "He tends to exaggerate his achievements.", zh: "他倾向于夸大自己的成就。" }
-    ],
-    level: 3
-  },
+  // ===== 第 3 关 =====
+  { word:"accumulate", phonetic:"/əˈkjuːmjəleɪt/", pos:"v.", meaning:"积累；积聚", forms:"accumulates / accumulated / accumulating", derivatives:"accumulation n. 积累", similar:"accurate adj. 准确的", antonym:"disperse v. 散开", phrases:["accumulate wealth 积累财富","accumulate experience 积累经验"], examples:[{en:"Dust accumulated on the shelves.",zh:"架子上积满了灰尘。"},{en:"He accumulated a large fortune.",zh:"他积累了巨额财富。"}], level:3 },
+  { word:"acknowledge", phonetic:"/əkˈnɑːlɪdʒ/", pos:"v.", meaning:"承认；答谢", forms:"acknowledges / acknowledged / acknowledging", derivatives:"acknowledgment n. 承认；致谢", similar:"knowledge n. 知识", antonym:"deny v. 否认", phrases:["acknowledge the fact 承认事实","acknowledge sb.'s help 答谢某人帮助"], examples:[{en:"He acknowledged his mistake.",zh:"他承认了自己的错误。"},{en:"She acknowledged the applause.",zh:"她向掌声致意。"}], level:3 },
+  { word:"anticipate", phonetic:"/ænˈtɪsɪpeɪt/", pos:"v.", meaning:"预期；预见", forms:"anticipates / anticipated / anticipating", derivatives:"anticipation n. 预期", similar:"participate v. 参加", antonym:"overlook v. 忽视", phrases:["anticipate doing sth. 预期做某事","as anticipated 如预期"], examples:[{en:"We anticipate rising demand.",zh:"我们预计需求会上升。"},{en:"He anticipated the question.",zh:"他预料到了这个问题。"}], level:3 },
+  { word:"boost", phonetic:"/buːst/", pos:"v./n.", meaning:"促进；提高", forms:"boosts / boosted / boosting", derivatives:"booster n. 促进因素", similar:"roast v. 烘烤", antonym:"hinder v. 阻碍", phrases:["boost the economy 促进经济","give a boost to 提振"], examples:[{en:"The policy boosted sales.",zh:"这项政策提振了销量。"},{en:"A win gave the team a boost.",zh:"一场胜利给球队打了一针强心剂。"}], level:3 },
+  { word:"compensate", phonetic:"/ˈkɑːmpenseɪt/", pos:"v.", meaning:"补偿；赔偿", forms:"compensates / compensated / compensating", derivatives:"compensation n. 补偿；赔偿金", similar:"condense v. 浓缩", antonym:"deprive v. 剥夺", phrases:["compensate for 弥补","compensate sb. for sth. 因……赔偿某人"], examples:[{en:"Nothing can compensate for lost time.",zh:"失去的时间无法弥补。"},{en:"They compensated workers for overtime.",zh:"他们因加班补偿了工人。"}], level:3 },
+  { word:"conservative", phonetic:"/kənˈsɜːrvətɪv/", pos:"adj.", meaning:"保守的；传统的", forms:"more conservative / most conservative", derivatives:"conserve v. 保护；节约", similar:"conversation n. 对话", antonym:"radical adj. 激进的", phrases:["a conservative estimate 保守估计","conservative values 保守的价值观"], examples:[{en:"That is a conservative estimate.",zh:"那是保守的估计。"},{en:"He holds conservative views.",zh:"他持保守的观点。"}], level:3 },
+  { word:"contribute", phonetic:"/kənˈtrɪbjuːt/", pos:"v.", meaning:"贡献；促成；捐助", forms:"contributes / contributed / contributing", derivatives:"contribution n. 贡献", similar:"attribute v. 归因于", antonym:"withhold v. 拒绝给予", phrases:["contribute to 有助于；捐助","contribute money 捐钱"], examples:[{en:"Exercise contributes to good health.",zh:"运动有助于健康。"},{en:"Everyone contributed to the fund.",zh:"每个人都捐了款。"}], level:3 },
+  { word:"demonstrate", phonetic:"/ˈdemənstreɪt/", pos:"v.", meaning:"证明；演示；示威", forms:"demonstrates / demonstrated / demonstrating", derivatives:"demonstration n. 证明；示威", similar:"remonstrate v. 抗议", antonym:"conceal v. 隐藏", phrases:["demonstrate that 证明","demonstrate how to 演示如何"], examples:[{en:"The results demonstrate the theory.",zh:"结果证明了这一理论。"},{en:"He demonstrated how the machine works.",zh:"他演示了机器如何运作。"}], level:3 },
+  { word:"enhance", phonetic:"/ɪnˈhæns/", pos:"v.", meaning:"提高；增强", forms:"enhances / enhanced / enhancing", derivatives:"enhancement n. 提高", similar:"enforce v. 执行", antonym:"weaken v. 削弱", phrases:["enhance efficiency 提高效率","enhance the quality 提升质量"], examples:[{en:"Exercise enhances your health.",zh:"锻炼能增进健康。"},{en:"The design enhances its appeal.",zh:"这个设计提升了吸引力。"}], level:3 },
+  { word:"exhibit", phonetic:"/ɪɡˈzɪbɪt/", pos:"v./n.", meaning:"展出；展品", forms:"exhibits / exhibited / exhibiting", derivatives:"exhibition n. 展览", similar:"inhibit v. 抑制", antonym:"conceal v. 隐藏", phrases:["exhibit at the fair 在展会上展出","exhibit great courage 表现出极大勇气"], examples:[{en:"The museum exhibits ancient art.",zh:"博物馆展出古代艺术品。"},{en:"She exhibited great patience.",zh:"她表现出极大的耐心。"}], level:3 },
+  { word:"facilitate", phonetic:"/fəˈsɪlɪteɪt/", pos:"v.", meaning:"促进；使便利", forms:"facilitates / facilitated / facilitating", derivatives:"facilitation n. 促进", similar:"fascinate v. 使着迷", antonym:"hinder v. 阻碍", phrases:["facilitate communication 促进交流","facilitate the process 简化流程"], examples:[{en:"The app facilitates learning.",zh:"这个应用方便了学习。"},{en:"Good roads facilitate trade.",zh:"良好的道路促进贸易。"}], level:3 },
+  { word:"implement", phonetic:"/ˈɪmplɪment/", pos:"v./n.", meaning:"实施；工具", forms:"implements / implemented / implementing", derivatives:"implementation n. 实施", similar:"compliment n. 赞美", antonym:"suspend v. 中止", phrases:["implement a policy 实施政策","implement a plan 执行计划"], examples:[{en:"They will implement the plan soon.",zh:"他们很快将实施这个计划。"},{en:"It is hard to implement in practice.",zh:"在实践中很难落实。"}], level:3 },
+  { word:"negotiate", phonetic:"/nɪˈɡoʊʃieɪt/", pos:"v.", meaning:"谈判；协商", forms:"negotiates / negotiated / negotiating", derivatives:"negotiation n. 谈判", similar:"negative adj. 消极的", antonym:"impose v. 强加", phrases:["negotiate with 与……谈判","negotiate a deal 谈成一笔交易"], examples:[{en:"They negotiated for three days.",zh:"他们谈判了三天。"},{en:"She negotiated a higher salary.",zh:"她谈到了更高的薪水。"}], level:3 },
+  { word:"promote", phonetic:"/prəˈmoʊt/", pos:"v.", meaning:"促进；晋升；推广", forms:"promotes / promoted / promoting", derivatives:"promotion n. 促进；晋升", similar:"remote adj. 遥远的", antonym:"demote v. 降职", phrases:["promote growth 促进增长","promote cooperation 促进合作"], examples:[{en:"The campaign promotes healthy eating.",zh:"这项活动推广健康饮食。"},{en:"He was promoted to manager.",zh:"他被提升为经理。"}], level:3 },
+  { word:"restrict", phonetic:"/rɪˈstrɪkt/", pos:"v.", meaning:"限制；约束", forms:"restricts / restricted / restricting", derivatives:"restriction n. 限制", similar:"construct v. 建造", antonym:"liberate v. 放开", phrases:["restrict access 限制进入","restrict freedom 限制自由"], examples:[{en:"They restrict the use of phones.",zh:"他们限制使用手机。"},{en:"Access is restricted to members.",zh:"仅限会员进入。"}], level:3 },
+  // ===== 第 4 关 =====
+  { word:"abundant", phonetic:"/əˈbʌndənt/", pos:"adj.", meaning:"丰富的；充裕的", forms:"more abundant / most abundant", derivatives:"abundance n. 丰富", similar:"abandon v. 放弃", antonym:"scarce adj. 稀缺的", phrases:["be abundant in 富于……","an abundant supply 充足的供应"], examples:[{en:"The region is abundant in resources.",zh:"该地区资源丰富。"},{en:"We have abundant evidence.",zh:"我们有充足的证据。"}], level:4 },
+  { word:"barrier", phonetic:"/ˈbæriər/", pos:"n.", meaning:"障碍；屏障", forms:"barriers", derivatives:"barricade n. 路障", similar:"carrier n. 运输者", antonym:"passage n. 通道", phrases:["language barrier 语言障碍","a barrier to ……的障碍"], examples:[{en:"Language is a common barrier.",zh:"语言是常见的障碍。"},{en:"They broke down the trade barrier.",zh:"他们打破了贸易壁垒。"}], level:4 },
+  { word:"coherent", phonetic:"/koʊˈhɪrənt/", pos:"adj.", meaning:"连贯的；一致的", forms:"more coherent / most coherent", derivatives:"coherence n. 连贯性", similar:"inherent adj. 固有的", antonym:"incoherent adj. 不连贯的", phrases:["a coherent argument 连贯的论证","a coherent whole 连贯的整体"], examples:[{en:"He gave a coherent speech.",zh:"他做了条理清晰的演讲。"},{en:"The essay lacks a coherent structure.",zh:"这篇文章缺乏连贯的结构。"}], level:4 },
+  { word:"comprehensive", phonetic:"/ˌkɑːmprɪˈhensɪv/", pos:"adj.", meaning:"全面的；综合的", forms:"more comprehensive / most comprehensive", derivatives:"comprehensively adv. 全面地", similar:"comprehensible adj. 可理解的", antonym:"partial adj. 部分的", phrases:["a comprehensive review 全面的审查","comprehensive coverage 全面覆盖"], examples:[{en:"The book gives a comprehensive overview.",zh:"这本书提供了全面的概述。"},{en:"We made a comprehensive plan.",zh:"我们制定了全面的计划。"}], level:4 },
+  { word:"dedicate", phonetic:"/ˈdedɪkeɪt/", pos:"v.", meaning:"奉献；致力于", forms:"dedicates / dedicated / dedicating", derivatives:"dedication n. 奉献", similar:"delicate adj. 精致的", antonym:"abandon v. 放弃", phrases:["dedicate oneself to 献身于","dedicate A to B 把 A 献给 B"], examples:[{en:"She dedicated her life to education.",zh:"她把一生献给了教育。"},{en:"He dedicated the book to his parents.",zh:"他把这本书献给父母。"}], level:4 },
+  { word:"deteriorate", phonetic:"/dɪˈtɪriəreɪt/", pos:"v.", meaning:"恶化；退化", forms:"deteriorates / deteriorated / deteriorating", derivatives:"deterioration n. 恶化", similar:"determine v. 决定", antonym:"improve v. 改善", phrases:["deteriorate into 恶化成……","deteriorate rapidly 迅速恶化"], examples:[{en:"His health deteriorated overnight.",zh:"他的健康一夜之间恶化。"},{en:"Relations between the two sides deteriorated.",zh:"双方关系恶化了。"}], level:4 },
+  { word:"estimate", phonetic:"/ˈestɪmeɪt/", pos:"v./n.", meaning:"估计；估算", forms:"estimates / estimated / estimating", derivatives:"estimation n. 估计", similar:"intimate adj. 亲密的", antonym:"calculate v. 精确计算", phrases:["a rough estimate 粗略估计","estimate the cost 估算成本"], examples:[{en:"I estimate it will take a week.",zh:"我估计需要一周。"},{en:"The damage was estimated at millions.",zh:"损失估计达数百万。"}], level:4 },
+  { word:"fluctuate", phonetic:"/ˈflʌktʃueɪt/", pos:"v.", meaning:"波动；起伏", forms:"fluctuates / fluctuated / fluctuating", derivatives:"fluctuation n. 波动", similar:"formulate v. 制定", antonym:"stabilize v. 稳定", phrases:["fluctuate between 在……之间波动","fluctuate with 随……波动"], examples:[{en:"Prices fluctuate with the seasons.",zh:"价格随季节波动。"},{en:"His mood fluctuated daily.",zh:"他的情绪每天起伏不定。"}], level:4 },
+  { word:"genuine", phonetic:"/ˈdʒenjuɪn/", pos:"adj.", meaning:"真正的；真诚的", forms:"more genuine / most genuine", derivatives:"genuinely adv. 真正地", similar:"genius n. 天才", antonym:"fake adj. 假的", phrases:["genuine leather 真皮","genuine interest 真正的兴趣"], examples:[{en:"This is a genuine antique.",zh:"这是一件真正的古董。"},{en:"She showed genuine concern.",zh:"她表现出真诚的关心。"}], level:4 },
+  { word:"hypothesis", phonetic:"/haɪˈpɑːθəsɪs/", pos:"n.", meaning:"假说；假设", forms:"hypotheses", derivatives:"hypothetical adj. 假设的", similar:"hypocrisy n. 虚伪", antonym:"fact n. 事实", phrases:["put forward a hypothesis 提出假设","test a hypothesis 检验假设"], examples:[{en:"The experiment supports the hypothesis.",zh:"实验支持这个假设。"},{en:"Scientists tested the hypothesis.",zh:"科学家检验了这一假设。"}], level:4 },
+  { word:"inevitable", phonetic:"/ɪnˈevɪtəbl/", pos:"adj.", meaning:"不可避免的；必然的", forms:"more inevitable / most inevitable", derivatives:"inevitably adv. 不可避免地", similar:"invincible adj. 无敌的", antonym:"avoidable adj. 可避免的", phrases:["an inevitable result 必然的结果","it is inevitable that 不可避免的是"], examples:[{en:"Change is inevitable.",zh:"变化是不可避免的。"},{en:"It was inevitable that prices would rise.",zh:"物价上涨是不可避免的。"}], level:4 },
+  { word:"modify", phonetic:"/ˈmɑːdɪfaɪ/", pos:"v.", meaning:"修改；调整", forms:"modifies / modified / modifying", derivatives:"modification n. 修改", similar:"mollify v. 安抚", antonym:"preserve v. 保持", phrases:["modify the plan 修改计划","modify behavior 改变行为"], examples:[{en:"We may modify the design.",zh:"我们可能会修改设计。"},{en:"He modified his approach.",zh:"他调整了自己的方法。"}], level:4 },
+  { word:"phenomenon", phonetic:"/fəˈnɑːmɪnən/", pos:"n.", meaning:"现象", forms:"phenomena", derivatives:"phenomenal adj. 非凡的", similar:"philosophy n. 哲学", antonym:"essence n. 本质", phrases:["a natural phenomenon 自然现象","a social phenomenon 社会现象"], examples:[{en:"The aurora is a natural phenomenon.",zh:"极光是一种自然现象。"},{en:"It became a cultural phenomenon.",zh:"它成了一种文化现象。"}], level:4 },
+  { word:"stimulate", phonetic:"/ˈstɪmjuleɪt/", pos:"v.", meaning:"刺激；激励", forms:"stimulates / stimulated / stimulating", derivatives:"stimulation n. 刺激", similar:"simulate v. 模拟", antonym:"discourage v. 抑制", phrases:["stimulate growth 刺激增长","stimulate interest 激发兴趣"], examples:[{en:"The policy stimulated demand.",zh:"这项政策刺激了需求。"},{en:"The book stimulated my curiosity.",zh:"这本书激发了我的好奇心。"}], level:4 },
+  { word:"transform", phonetic:"/trænsˈfɔːrm/", pos:"v.", meaning:"改变；转化", forms:"transforms / transformed / transforming", derivatives:"transformation n. 转变", similar:"transfer v. 转移", antonym:"preserve v. 保持", phrases:["transform A into B 把 A 变成 B","transform society 改变社会"], examples:[{en:"The internet transformed our lives.",zh:"互联网改变了我们的生活。"},{en:"Heat transforms ice into water.",zh:"热量把冰变成水。"}], level:4 },
 
-  // ============ 第 4 关（多音节、低频） ============
-  {
-    word: "fluctuate",
-    phonetic: "/ˈflʌktʃueɪt/",
-    pos: "v.",
-    meaning: "波动；起伏",
-    forms: "fluctuates / fluctuated / fluctuating",
-    derivatives: "fluctuation n. 波动；起伏",
-    similar: "formulate v. 制定",
-    antonym: "stabilize v. 稳定",
-    phrases: ["fluctuate between 在……之间波动", "fluctuate with 随……波动"],
-    examples: [
-      { en: "Prices fluctuate with the seasons.", zh: "价格随季节波动。" },
-      { en: "His mood fluctuated between hope and despair.", zh: "他的情绪在希望与绝望之间波动。" }
-    ],
-    level: 4
-  },
-  {
-    word: "formulate",
-    phonetic: "/ˈfɔːrmjuleɪt/",
-    pos: "v.",
-    meaning: "制定；系统地阐述",
-    forms: "formulates / formulated / formulating",
-    derivatives: "formulation n. 制定；阐述",
-    similar: "fluctuate v. 波动",
-    antonym: "—",
-    phrases: ["formulate a policy 制定政策", "formulate a theory 阐述理论"],
-    examples: [
-      { en: "The committee formulated a new policy.", zh: "委员会制定了新政策。" },
-      { en: "He struggled to formulate his ideas.", zh: "他费劲地组织表达自己的想法。" }
-    ],
-    level: 4
-  },
-  {
-    word: "hypothesis",
-    phonetic: "/haɪˈpɑːθəsɪs/",
-    pos: "n.",
-    meaning: "假说；假设",
-    forms: "hypotheses（复数）",
-    derivatives: "hypothetical adj. 假设的",
-    similar: "hypocrisy n. 虚伪",
-    antonym: "fact n. 事实",
-    phrases: ["put forward a hypothesis 提出假设", "test a hypothesis 检验假设"],
-    examples: [
-      { en: "The experiment supports the hypothesis.", zh: "实验支持这个假设。" },
-      { en: "Scientists tested the hypothesis with new data.", zh: "科学家用新数据检验了这一假设。" }
-    ],
-    level: 4
-  },
-  {
-    word: "inevitable",
-    phonetic: "/ɪnˈevɪtəbl/",
-    pos: "adj.",
-    meaning: "不可避免的；必然的",
-    forms: "—",
-    derivatives: "inevitably adv. 不可避免地",
-    similar: "invincible adj. 无敌的",
-    antonym: "avoidable adj. 可避免的",
-    phrases: ["an inevitable result 必然的结果", "it is inevitable that 不可避免的是"],
-    examples: [
-      { en: "Change is inevitable.", zh: "变化是不可避免的。" },
-      { en: "It was inevitable that prices would rise.", zh: "物价上涨是不可避免的。" }
-    ],
-    level: 4
-  },
-  {
-    word: "innovative",
-    phonetic: "/ˈɪnəveɪtɪv/",
-    pos: "adj.",
-    meaning: "创新的；革新的",
-    forms: "more innovative / most innovative",
-    derivatives: "innovation n. 创新；innovate v. 创新",
-    similar: "initiative n. 主动性",
-    antonym: "conventional adj. 传统的",
-    phrases: ["innovative ideas 创新的想法", "an innovative approach 创新的方法"],
-    examples: [
-      { en: "The company is known for innovative designs.", zh: "这家公司以创新设计闻名。" },
-      { en: "We need an innovative solution to the problem.", zh: "我们需要创新的解决方案。" }
-    ],
-    level: 4
-  },
-  {
-    word: "integrate",
-    phonetic: "/ˈɪntɪɡreɪt/",
-    pos: "v.",
-    meaning: "整合；融合",
-    forms: "integrates / integrated / integrating",
-    derivatives: "integration n. 整合；一体化",
-    similar: "interrogate v. 审问",
-    antonym: "separate v. 分离",
-    phrases: ["integrate into 融入", "integrate A with B 将 A 与 B 整合"],
-    examples: [
-      { en: "Newcomers gradually integrated into the community.", zh: "新来者逐渐融入了社区。" },
-      { en: "The system integrates data from different sources.", zh: "该系统整合了不同来源的数据。" }
-    ],
-    level: 4
-  },
-  {
-    word: "manipulate",
-    phonetic: "/məˈnɪpjuleɪt/",
-    pos: "v.",
-    meaning: "操纵；熟练操作",
-    forms: "manipulates / manipulated / manipulating",
-    derivatives: "manipulation n. 操纵；操作",
-    similar: "manufacture v. 制造",
-    antonym: "—",
-    phrases: ["manipulate data 处理数据", "manipulate public opinion 操纵舆论"],
-    examples: [
-      { en: "He manipulated the figures to hide the loss.", zh: "他篡改数字以掩盖亏损。" },
-      { en: "Doctors can manipulate tiny instruments.", zh: "医生能熟练操作微型器械。" }
-    ],
-    level: 4
-  },
-  {
-    word: "negotiate",
-    phonetic: "/nɪˈɡoʊʃieɪt/",
-    pos: "v.",
-    meaning: "谈判；协商",
-    forms: "negotiates / negotiated / negotiating",
-    derivatives: "negotiation n. 谈判；协商",
-    similar: "negative adj. 消极的",
-    antonym: "impose v. 强加",
-    phrases: ["negotiate with 与……谈判", "negotiate a deal 谈成一笔交易"],
-    examples: [
-      { en: "The two sides negotiated for three days.", zh: "双方谈判了三天。" },
-      { en: "She negotiated a higher salary.", zh: "她通过谈判争取到更高的薪水。" }
-    ],
-    level: 4
-  },
-  {
-    word: "phenomenon",
-    phonetic: "/fəˈnɑːmɪnən/",
-    pos: "n.",
-    meaning: "现象",
-    forms: "phenomena（复数）",
-    derivatives: "phenomenal adj. 非凡的",
-    similar: "philosophy n. 哲学",
-    antonym: "—",
-    phrases: ["a natural phenomenon 自然现象", "a social phenomenon 社会现象"],
-    examples: [
-      { en: "The northern lights are a natural phenomenon.", zh: "北极光是一种自然现象。" },
-      { en: "The show became a cultural phenomenon.", zh: "这个节目成了一种文化现象。" }
-    ],
-    level: 4
-  },
-  {
-    word: "predominantly",
-    phonetic: "/prɪˈdɑːmɪnəntli/",
-    pos: "adv.",
-    meaning: "主要地；占主导地",
-    forms: "—",
-    derivatives: "predominant adj. 占主导的；predominance n. 主导地位",
-    similar: "preliminary adj. 初步的",
-    antonym: "secondarily adv. 次要地",
-    phrases: ["predominantly female 以女性为主", "predominantly rural 以农村为主"],
-    examples: [
-      { en: "The audience was predominantly young.", zh: "观众以年轻人为主。" },
-      { en: "The region is predominantly agricultural.", zh: "该地区以农业为主。" }
-    ],
-    level: 4
-  },
-  {
-    word: "sophisticated",
-    phonetic: "/səˈfɪstɪkeɪtɪd/",
-    pos: "adj.",
-    meaning: "复杂的；精密的；老练的",
-    forms: "more sophisticated / most sophisticated",
-    derivatives: "sophistication n. 复杂；老练",
-    similar: "spontaneous adj. 自发的",
-    antonym: "simple adj. 简单的",
-    phrases: ["sophisticated equipment 精密的设备", "a sophisticated audience 老练的观众"],
-    examples: [
-      { en: "The lab uses sophisticated equipment.", zh: "实验室使用精密设备。" },
-      { en: "She is sophisticated and well traveled.", zh: "她见多识广、老练世故。" }
-    ],
-    level: 4
-  },
-  {
-    word: "spontaneous",
-    phonetic: "/spɑːnˈteɪniəs/",
-    pos: "adj.",
-    meaning: "自发的；自然的",
-    forms: "more spontaneous / most spontaneous",
-    derivatives: "spontaneity n. 自发性；spontaneously adv. 自发地",
-    similar: "simultaneous adj. 同时的",
-    antonym: "planned adj. 计划好的",
-    phrases: ["spontaneous applause 自发的掌声", "a spontaneous decision 一时冲动的决定"],
-    examples: [
-      { en: "The crowd broke into spontaneous applause.", zh: "人群爆发出自发的掌声。" },
-      { en: "We made a spontaneous decision to travel.", zh: "我们一时兴起决定去旅行。" }
-    ],
-    level: 4
-  },
-  {
-    word: "substantial",
-    phonetic: "/səbˈstænʃl/",
-    pos: "adj.",
-    meaning: "大量的；实质的",
-    forms: "more substantial / most substantial",
-    derivatives: "substantially adv. 大幅地；基本上",
-    similar: "substitute v. 代替",
-    antonym: "negligible adj. 微不足道的",
-    phrases: ["a substantial amount 大量", "substantial progress 实质性进展"],
-    examples: [
-      { en: "They made substantial progress this year.", zh: "他们今年取得了实质性进展。" },
-      { en: "He inherited a substantial fortune.", zh: "他继承了一大笔财产。" }
-    ],
-    level: 4
-  },
-  {
-    word: "vulnerable",
-    phonetic: "/ˈvʌlnərəbl/",
-    pos: "adj.",
-    meaning: "脆弱的；易受伤害的",
-    forms: "more vulnerable / most vulnerable",
-    derivatives: "vulnerability n. 脆弱性",
-    similar: "voluntary adj. 自愿的",
-    antonym: "invulnerable adj. 坚不可摧的",
-    phrases: ["be vulnerable to 易受……伤害", "a vulnerable group 弱势群体"],
-    examples: [
-      { en: "Children are vulnerable to disease.", zh: "儿童容易受疾病侵袭。" },
-      { en: "The system is vulnerable to attack.", zh: "这个系统容易受到攻击。" }
-    ],
-    level: 4
-  },
-  {
-    word: "prestige",
-    phonetic: "/preˈstiːʒ/",
-    pos: "n.",
-    meaning: "威望；声望",
-    forms: "—",
-    derivatives: "prestigious adj. 有声望的",
-    similar: "privilege n. 特权",
-    antonym: "disgrace n. 耻辱",
-    phrases: ["enjoy high prestige 享有很高声望", "national prestige 国家威望"],
-    examples: [
-      { en: "The university has great prestige.", zh: "这所大学享有很高的声望。" },
-      { en: "He enjoys high prestige among his colleagues.", zh: "他在同事中享有很高的威望。" }
-    ],
-    level: 4
-  }
+  // ===== 第 5 关 =====
+  { word:"advocate", phonetic:"/ˈædvəkeɪt/", pos:"v./n.", meaning:"提倡；拥护（者）", forms:"advocates / advocated / advocating", derivatives:"advocacy n. 拥护；提倡", similar:"adequate adj. 足够的", antonym:"oppose v. 反对", phrases:["advocate for 为……辩护；提倡","a strong advocate of ……的坚定拥护者"], examples:[{en:"Experts advocate a balanced diet.",zh:"专家提倡均衡饮食。"},{en:"He is a strong advocate of reform.",zh:"他是改革的坚定拥护者。"}], level:5 },
+  { word:"bewilder", phonetic:"/bɪˈwɪldər/", pos:"v.", meaning:"使迷惑；使不知所措", forms:"bewilders / bewildered / bewildering", derivatives:"bewilderment n. 迷惑", similar:"wilderness n. 荒野", antonym:"enlighten v. 启发", phrases:["be bewildered by 被……弄糊涂","a bewildering array 令人眼花缭乱的一堆"], examples:[{en:"The instructions bewildered me.",zh:"这些说明把我弄糊涂了。"},{en:"She was bewildered by the noise.",zh:"她被噪音弄得不知所措。"}], level:5 },
+  { word:"compel", phonetic:"/kəmˈpel/", pos:"v.", meaning:"强迫；迫使", forms:"compels / compelled / compelling", derivatives:"compulsion n. 强迫", similar:"compete v. 竞争", antonym:"liberate v. 解放", phrases:["compel sb. to do 强迫某人做","feel compelled to 感到不得不"], examples:[{en:"Illness compelled him to resign.",zh:"疾病迫使他辞职。"},{en:"I felt compelled to speak up.",zh:"我感到不得不开口。"}], level:5 },
+  { word:"controversy", phonetic:"/ˈkɑːntrəvɜːrsi/", pos:"n.", meaning:"争议；争论", forms:"controversies", derivatives:"controversial adj. 有争议的", similar:"conversely adv. 相反地", antonym:"consensus n. 共识", phrases:["cause controversy 引发争议","a heated controversy 激烈的争论"], examples:[{en:"The decision caused controversy.",zh:"这个决定引发了争议。"},{en:"There is controversy over the plan.",zh:"这个计划存在争议。"}], level:5 },
+  { word:"diminish", phonetic:"/dɪˈmɪnɪʃ/", pos:"v.", meaning:"减少；减弱", forms:"diminishes / diminished / diminishing", derivatives:"diminution n. 减少", similar:"demolish v. 拆除", antonym:"increase v. 增加", phrases:["diminish with 随着……减少","diminish the importance 削弱重要性"], examples:[{en:"The pain gradually diminished.",zh:"疼痛逐渐减轻。"},{en:"Nothing diminished her enthusiasm.",zh:"什么也没能减弱她的热情。"}], level:5 },
+  { word:"durable", phonetic:"/ˈdʊrəbl/", pos:"adj.", meaning:"耐用的；持久的", forms:"more durable / most durable", derivatives:"durability n. 耐用性", similar:"duration n. 持续时间", antonym:"fragile adj. 易碎的", phrases:["durable goods 耐用品","a durable peace 持久的和平"], examples:[{en:"These shoes are very durable.",zh:"这双鞋非常耐用。"},{en:"They built a durable friendship.",zh:"他们建立了长久的友谊。"}], level:5 },
+  { word:"endeavor", phonetic:"/ɪnˈdevər/", pos:"v./n.", meaning:"努力；尽力", forms:"endeavors / endeavored / endeavoring", derivatives:"endeavoring adj. 努力的", similar:"endure v. 忍受", antonym:"abandon v. 放弃", phrases:["endeavor to do sth. 努力做某事","make every endeavor 尽一切努力"], examples:[{en:"We endeavor to provide good service.",zh:"我们努力提供优质服务。"},{en:"He made every endeavor to finish.",zh:"他尽一切努力完成。"}], level:5 },
+  { word:"formulate", phonetic:"/ˈfɔːrmjuleɪt/", pos:"v.", meaning:"制定；阐述", forms:"formulates / formulated / formulating", derivatives:"formulation n. 制定；阐述", similar:"fluctuate v. 波动", antonym:"abolish v. 废止", phrases:["formulate a policy 制定政策","formulate a theory 阐述理论"], examples:[{en:"The committee formulated a policy.",zh:"委员会制定了政策。"},{en:"He struggled to formulate his ideas.",zh:"他费力地组织自己的想法。"}], level:5 },
+  { word:"glimpse", phonetic:"/ɡlɪmps/", pos:"n./v.", meaning:"一瞥；瞥见", forms:"glimpses / glimpsed / glimpsing", derivatives:"glimpsing n. 一瞥", similar:"glimpse n. 微光", antonym:"stare n. 凝视", phrases:["catch a glimpse of 瞥见","a glimpse into 对……的一瞥"], examples:[{en:"I caught a glimpse of her.",zh:"我瞥见了她。"},{en:"The book offers a glimpse into the past.",zh:"这本书让人一窥过去。"}], level:5 },
+  { word:"illustrate", phonetic:"/ˈɪləstreɪt/", pos:"v.", meaning:"说明；举例；配插图", forms:"illustrates / illustrated / illustrating", derivatives:"illustration n. 说明；插图", similar:"illuminate v. 照亮", antonym:"obscure v. 使模糊", phrases:["illustrate the point 说明观点","illustrated book 插图本"], examples:[{en:"Let me illustrate with an example.",zh:"让我用一个例子说明。"},{en:"The chart illustrates the trend.",zh:"这张图说明了趋势。"}], level:5 },
+  { word:"manipulate", phonetic:"/məˈnɪpjuleɪt/", pos:"v.", meaning:"操纵；熟练操作", forms:"manipulates / manipulated / manipulating", derivatives:"manipulation n. 操纵", similar:"manufacture v. 制造", antonym:"liberate v. 放任", phrases:["manipulate data 处理数据","manipulate public opinion 操纵舆论"], examples:[{en:"He manipulated the figures.",zh:"他篡改了数字。"},{en:"Doctors manipulate tiny instruments.",zh:"医生熟练操作微型器械。"}], level:5 },
+  { word:"notion", phonetic:"/ˈnoʊʃn/", pos:"n.", meaning:"概念；观念", forms:"notions", derivatives:"notional adj. 概念上的", similar:"nation n. 国家", antonym:"reality n. 现实", phrases:["the notion that ……的观念","reject the notion 拒绝这个想法"], examples:[{en:"He rejected the notion of luck.",zh:"他不认同运气这一说法。"},{en:"I have no notion of time.",zh:"我没有时间概念。"}], level:5 },
+  { word:"prevail", phonetic:"/prɪˈveɪl/", pos:"v.", meaning:"盛行；获胜", forms:"prevails / prevailed / prevailing", derivatives:"prevailing adj. 普遍的", similar:"reveal v. 揭示", antonym:"fail v. 失败", phrases:["prevail over 战胜","the prevailing view 主流观点"], examples:[{en:"Justice will prevail.",zh:"正义终将获胜。"},{en:"This custom prevails in the region.",zh:"这一习俗在该地区盛行。"}], level:5 },
+  { word:"sophisticated", phonetic:"/səˈfɪstɪkeɪtɪd/", pos:"adj.", meaning:"复杂的；精密的；老练的", forms:"more sophisticated / most sophisticated", derivatives:"sophistication n. 复杂；老练", similar:"spontaneous adj. 自发的", antonym:"simple adj. 简单的", phrases:["sophisticated equipment 精密的设备","a sophisticated audience 老练的观众"], examples:[{en:"The lab uses sophisticated equipment.",zh:"实验室使用精密设备。"},{en:"She is sophisticated and well traveled.",zh:"她见多识广、老练世故。"}], level:5 },
+  { word:"vulnerable", phonetic:"/ˈvʌlnərəbl/", pos:"adj.", meaning:"脆弱的；易受伤害的", forms:"more vulnerable / most vulnerable", derivatives:"vulnerability n. 脆弱性", similar:"voluntary adj. 自愿的", antonym:"invulnerable adj. 坚不可摧的", phrases:["be vulnerable to 易受……伤害","a vulnerable group 弱势群体"], examples:[{en:"Children are vulnerable to disease.",zh:"儿童容易受疾病侵袭。"},{en:"The system is vulnerable to attack.",zh:"这个系统容易受到攻击。"}], level:5 },
+
+  // ===== 第 6 关 =====
+  { word:"ambiguous", phonetic:"/æmˈbɪɡjuəs/", pos:"adj.", meaning:"含糊的；模棱两可的", forms:"more ambiguous / most ambiguous", derivatives:"ambiguity n. 含糊；歧义", similar:"ambitious adj. 有雄心的", antonym:"explicit adj. 明确的", phrases:["an ambiguous answer 模棱两可的回答","remain ambiguous 仍然含糊不清"], examples:[{en:"His answer was deliberately ambiguous.",zh:"他的回答故意含糊其辞。"},{en:"The clause is ambiguous.",zh:"这一条款含义模糊。"}], level:6 },
+  { word:"bias", phonetic:"/ˈbaɪəs/", pos:"n./v.", meaning:"偏见；使有偏见", forms:"biases / biased / biasing", derivatives:"biased adj. 有偏见的", similar:"basis n. 基础", antonym:"fairness n. 公平", phrases:["gender bias 性别偏见","a bias against 对……的偏见"], examples:[{en:"We must avoid bias.",zh:"我们必须避免偏见。"},{en:"The report showed a clear bias.",zh:"这份报告带有明显偏见。"}], level:6 },
+  { word:"cease", phonetic:"/siːs/", pos:"v.", meaning:"停止；终止", forms:"ceases / ceased / ceasing", derivatives:"ceaseless adj. 不停的", similar:"seize v. 抓住", antonym:"commence v. 开始", phrases:["cease to do sth. 停止做某事","cease fire 停火"], examples:[{en:"The rain finally ceased.",zh:"雨终于停了。"},{en:"The company ceased operations.",zh:"公司停止了运营。"}], level:6 },
+  { word:"coincide", phonetic:"/ˌkoʊɪnˈsaɪd/", pos:"v.", meaning:"同时发生；一致", forms:"coincides / coincided / coinciding", derivatives:"coincidence n. 巧合", similar:"collide v. 碰撞", antonym:"differ v. 不同", phrases:["coincide with 与……同时发生；与……一致"], examples:[{en:"My holiday coincides with the festival.",zh:"我的假期恰逢这个节日。"},{en:"Their interests coincide.",zh:"他们的利益一致。"}], level:6 },
+  { word:"discriminate", phonetic:"/dɪˈskrɪmɪneɪt/", pos:"v.", meaning:"歧视；区分", forms:"discriminates / discriminated / discriminating", derivatives:"discrimination n. 歧视", similar:"disseminate v. 传播", antonym:"equate v. 等同看待", phrases:["discriminate against 歧视","discriminate between 区分"], examples:[{en:"It is illegal to discriminate.",zh:"歧视是违法的。"},{en:"Babies can discriminate between colors.",zh:"婴儿能区分颜色。"}], level:6 },
+  { word:"dwell", phonetic:"/dwel/", pos:"v.", meaning:"居住；细想", forms:"dwells / dwelt / dwelling", derivatives:"dwelling n. 住所", similar:"swell v. 膨胀", antonym:"depart v. 离开", phrases:["dwell on 老是想着","dwell in 居住在"], examples:[{en:"They dwell in the countryside.",zh:"他们住在乡下。"},{en:"Don't dwell on past mistakes.",zh:"别老想着过去的错误。"}], level:6 },
+  { word:"equivalent", phonetic:"/ɪˈkwɪvələnt/", pos:"adj./n.", meaning:"相等的；等价物", forms:"equivalents", derivatives:"equivalence n. 相等；等价", similar:"evident adj. 明显的", antonym:"different adj. 不同的", phrases:["be equivalent to 相当于","the equivalent of ……的等价物"], examples:[{en:"One mile is equivalent to 1.6 km.",zh:"一英里相当于 1.6 公里。"},{en:"Is there an English equivalent?",zh:"有对应的英语说法吗？"}], level:6 },
+  { word:"frustrate", phonetic:"/ˈfrʌstreɪt/", pos:"v.", meaning:"使沮丧；挫败", forms:"frustrates / frustrated / frustrating", derivatives:"frustration n. 挫折", similar:"fluctuate v. 波动", antonym:"encourage v. 鼓励", phrases:["be frustrated with 对……感到沮丧","frustrate a plan 挫败计划"], examples:[{en:"The delay frustrated everyone.",zh:"延误让大家很沮丧。"},{en:"He felt frustrated by the results.",zh:"他对结果感到沮丧。"}], level:6 },
+  { word:"halt", phonetic:"/hɔːlt/", pos:"v./n.", meaning:"停止；暂停", forms:"halts / halted / halting", derivatives:"halting adj. 断断续续的", similar:"hold v. 握住", antonym:"proceed v. 继续", phrases:["come to a halt 停下来","bring to a halt 使停止"], examples:[{en:"The train came to a halt.",zh:"火车停了下来。"},{en:"They halted the project.",zh:"他们暂停了这个项目。"}], level:6 },
+  { word:"integrate", phonetic:"/ˈɪntɪɡreɪt/", pos:"v.", meaning:"整合；融合", forms:"integrates / integrated / integrating", derivatives:"integration n. 整合；一体化", similar:"interrogate v. 审问", antonym:"separate v. 分离", phrases:["integrate into 融入","integrate A with B 将 A 与 B 整合"], examples:[{en:"The system integrates data.",zh:"该系统整合了数据。"},{en:"Newcomers integrated quickly.",zh:"新来者很快融入了。"}], level:6 },
+  { word:"magnitude", phonetic:"/ˈmæɡnɪtuːd/", pos:"n.", meaning:"巨大；重要性；量级", forms:"magnitudes", derivatives:"magnify v. 放大", similar:"latitude n. 纬度", antonym:"insignificance n. 微不足道", phrases:["the magnitude of 严重程度；大小","of this magnitude 这种规模的"], examples:[{en:"They underestimated the magnitude.",zh:"他们低估了严重程度。"},{en:"An earthquake of magnitude 6.",zh:"一次 6 级地震。"}], level:6 },
+  { word:"notorious", phonetic:"/noʊˈtɔːriəs/", pos:"adj.", meaning:"臭名昭著的", forms:"more notorious / most notorious", derivatives:"notoriety n. 恶名", similar:"obvious adj. 明显的", antonym:"reputable adj. 名声好的", phrases:["be notorious for 因……而臭名昭著"], examples:[{en:"The city is notorious for traffic.",zh:"这座城市以交通拥堵著称。"},{en:"He was a notorious gambler.",zh:"他是个臭名昭著的赌徒。"}], level:6 },
+  { word:"plausible", phonetic:"/ˈplɔːzəbl/", pos:"adj.", meaning:"貌似合理的", forms:"more plausible / most plausible", derivatives:"plausibility n. 似真性", similar:"possible adj. 可能的", antonym:"implausible adj. 难以置信的", phrases:["a plausible excuse 貌似合理的借口","a plausible explanation 合理的解释"], examples:[{en:"That sounds plausible.",zh:"那听起来有道理。"},{en:"He gave a plausible excuse.",zh:"他给了一个看似合理的借口。"}], level:6 },
+  { word:"suppress", phonetic:"/səˈpres/", pos:"v.", meaning:"镇压；抑制", forms:"suppresses / suppressed / suppressing", derivatives:"suppression n. 镇压；抑制", similar:"oppress v. 压迫", antonym:"release v. 释放", phrases:["suppress emotions 压抑情绪","suppress a revolt 镇压叛乱"], examples:[{en:"She suppressed her anger.",zh:"她抑制住怒火。"},{en:"The government suppressed the protest.",zh:"政府镇压了抗议。"}], level:6 },
+  { word:"turbulent", phonetic:"/ˈtɜːrbjələnt/", pos:"adj.", meaning:"动荡的；湍流的", forms:"more turbulent / most turbulent", derivatives:"turbulence n. 动荡", similar:"reluctant adj. 不情愿的", antonym:"calm adj. 平静的", phrases:["turbulent times 动荡时期","turbulent water 湍急的水流"], examples:[{en:"It was a turbulent year.",zh:"那是动荡的一年。"},{en:"We hit some turbulent air.",zh:"我们遇到了强气流。"}], level:6 },
+  // ===== 第 7 关 =====
+  { word:"alienate", phonetic:"/ˈeɪliəneɪt/", pos:"v.", meaning:"疏远；使不和", forms:"alienates / alienated / alienating", derivatives:"alienation n. 疏远", similar:"alien adj. 外国的", antonym:"befriend v. 亲近", phrases:["alienate sb. 使某人疏远","feel alienated 感到疏远"], examples:[{en:"His words alienated his friends.",zh:"他的话疏远了朋友。"},{en:"She felt alienated from the group.",zh:"她觉得自己与群体疏远了。"}], level:7 },
+  { word:"betray", phonetic:"/bɪˈtreɪ/", pos:"v.", meaning:"背叛；泄露", forms:"betrays / betrayed / betraying", derivatives:"betrayal n. 背叛", similar:"portray v. 描绘", antonym:"support v. 支持", phrases:["betray a trust 辜负信任","betray one's feelings 流露感情"], examples:[{en:"He betrayed his friends.",zh:"他背叛了朋友。"},{en:"Her face betrayed her fear.",zh:"她的表情流露出恐惧。"}], level:7 },
+  { word:"chronic", phonetic:"/ˈkrɑːnɪk/", pos:"adj.", meaning:"慢性的；长期的", forms:"more chronic / most chronic", derivatives:"chronically adv. 长期地", similar:"chronological adj. 按时间顺序的", antonym:"acute adj. 急性的", phrases:["chronic disease 慢性病","chronic shortage 长期短缺"], examples:[{en:"He suffers from chronic pain.",zh:"他饱受慢性疼痛之苦。"},{en:"The city has a chronic housing shortage.",zh:"这座城市长期住房短缺。"}], level:7 },
+  { word:"deem", phonetic:"/diːm/", pos:"v.", meaning:"认为；视为", forms:"deems / deemed / deeming", derivatives:"deeming n. 判断", similar:"deed n. 行为", antonym:"doubt v. 怀疑", phrases:["be deemed as 被视为","deem it necessary 认为有必要"], examples:[{en:"The plan was deemed a success.",zh:"该计划被认为是成功的。"},{en:"They deemed it wise to wait.",zh:"他们认为等待是明智的。"}], level:7 },
+  { word:"endorse", phonetic:"/ɪnˈdɔːrs/", pos:"v.", meaning:"支持；认同；背书", forms:"endorses / endorsed / endorsing", derivatives:"endorsement n. 支持；代言", similar:"endow v. 赋予", antonym:"oppose v. 反对", phrases:["endorse a plan 支持计划","endorse a product 为产品代言"], examples:[{en:"The mayor endorsed the plan.",zh:"市长支持这项计划。"},{en:"Famous athletes endorse the brand.",zh:"知名运动员为该品牌代言。"}], level:7 },
+  { word:"feasible", phonetic:"/ˈfiːzəbl/", pos:"adj.", meaning:"可行的", forms:"more feasible / most feasible", derivatives:"feasibility n. 可行性", similar:"flexible adj. 灵活的", antonym:"impractical adj. 不切实际的", phrases:["a feasible plan 可行的计划","technically feasible 技术上可行"], examples:[{en:"Is the plan feasible?",zh:"这个计划可行吗？"},{en:"It is not financially feasible.",zh:"这在财务上不可行。"}], level:7 },
+  { word:"grieve", phonetic:"/ɡriːv/", pos:"v.", meaning:"悲伤；哀悼", forms:"grieves / grieved / grieving", derivatives:"grief n. 悲伤", similar:"relieve v. 减轻", antonym:"rejoice v. 欣喜", phrases:["grieve over 为……伤心","grieve for 悼念"], examples:[{en:"She grieved over the loss.",zh:"她为失去而悲伤。"},{en:"He is still grieving.",zh:"他仍在悲痛之中。"}], level:7 },
+  { word:"hinder", phonetic:"/ˈhɪndər/", pos:"v.", meaning:"阻碍；妨碍", forms:"hinders / hindered / hindering", derivatives:"hindrance n. 障碍", similar:"hinter n. 后方", antonym:"facilitate v. 促进", phrases:["hinder progress 阻碍进步","hinder sb. from 妨碍某人做"], examples:[{en:"Bad weather hindered the rescue.",zh:"恶劣天气阻碍了救援。"},{en:"Don't let fear hinder you.",zh:"别让恐惧妨碍你。"}], level:7 },
+  { word:"impose", phonetic:"/ɪmˈpoʊz/", pos:"v.", meaning:"强加；征收", forms:"imposes / imposed / imposing", derivatives:"imposition n. 强加", similar:"expose v. 暴露", antonym:"withdraw v. 撤回", phrases:["impose on 把……强加于","impose a tax 征税"], examples:[{en:"Don't impose your views on others.",zh:"别把你的观点强加于人。"},{en:"They imposed new taxes.",zh:"他们征收了新税。"}], level:7 },
+  { word:"legitimate", phonetic:"/lɪˈdʒɪtɪmət/", pos:"adj.", meaning:"合法的；正当的", forms:"more legitimate / most legitimate", derivatives:"legitimacy n. 合法性", similar:"legislation n. 立法", antonym:"illegal adj. 非法的", phrases:["a legitimate reason 正当理由","legitimate business 合法生意"], examples:[{en:"He has a legitimate concern.",zh:"他有正当的担忧。"},{en:"This is a legitimate business.",zh:"这是一家合法企业。"}], level:7 },
+  { word:"merit", phonetic:"/ˈmerɪt/", pos:"n./v.", meaning:"优点；值得", forms:"merits / merited / meriting", derivatives:"meritorious adj. 有功的", similar:"merry adj. 欢乐的", antonym:"demerit n. 缺点", phrases:["on merit 凭实力","merit attention 值得注意"], examples:[{en:"The plan has its merits.",zh:"这个计划有它的优点。"},{en:"The idea merits consideration.",zh:"这个想法值得考虑。"}], level:7 },
+  { word:"negligible", phonetic:"/ˈneɡlɪdʒəbl/", pos:"adj.", meaning:"微不足道的", forms:"more negligible / most negligible", derivatives:"neglect v. 忽视", similar:"negligent adj. 疏忽的", antonym:"significant adj. 重大的", phrases:["a negligible effect 微不足道的影响","negligible cost 极低的成本"], examples:[{en:"The difference is negligible.",zh:"差别微不足道。"},{en:"It has a negligible impact.",zh:"它的影响微乎其微。"}], level:7 },
+  { word:"perpetual", phonetic:"/pərˈpetʃuəl/", pos:"adj.", meaning:"永久的；不断的", forms:"more perpetual / most perpetual", derivatives:"perpetually adv. 永远地", similar:"perpetuate v. 使永久", antonym:"temporary adj. 暂时的", phrases:["perpetual motion 永恒运动","perpetual problems 没完没了的问题"], examples:[{en:"They live in perpetual fear.",zh:"他们生活在无休止的恐惧中。"},{en:"The machine promises perpetual motion.",zh:"这台机器号称能永恒运动。"}], level:7 },
+  { word:"strenuous", phonetic:"/ˈstrenjuəs/", pos:"adj.", meaning:"费力的；奋发的", forms:"more strenuous / most strenuous", derivatives:"strenuously adv. 竭力地", similar:"strenuous adj. 紧张的", antonym:"easy adj. 轻松的", phrases:["strenuous exercise 剧烈运动","strenuous efforts 艰苦的努力"], examples:[{en:"Avoid strenuous exercise today.",zh:"今天避免剧烈运动。"},{en:"It was a strenuous climb.",zh:"这是一次费力的攀登。"}], level:7 },
+  { word:"versatile", phonetic:"/ˈvɜːrsətl/", pos:"adj.", meaning:"多才多艺的；多用途的", forms:"more versatile / most versatile", derivatives:"versatility n. 多才多艺", similar:"vertical adj. 垂直的", antonym:"limited adj. 用途有限的", phrases:["a versatile tool 多用途工具","a versatile actor 多才多艺的演员"], examples:[{en:"He is a versatile actor.",zh:"他是个多才多艺的演员。"},{en:"It is a versatile tool.",zh:"这是个多用途工具。"}], level:7 },
+
+  // ===== 第 8 关 =====
+  { word:"aggravate", phonetic:"/ˈæɡrəveɪt/", pos:"v.", meaning:"加重；激怒", forms:"aggravates / aggravated / aggravating", derivatives:"aggravation n. 加重", similar:"aggregate v. 聚集", antonym:"alleviate v. 减轻", phrases:["aggravate the situation 使情况恶化","aggravate a problem 使问题加重"], examples:[{en:"Stress can aggravate illness.",zh:"压力会加重病情。"},{en:"His words aggravated her.",zh:"他的话激怒了她。"}], level:8 },
+  { word:"blunt", phonetic:"/blʌnt/", pos:"adj.", meaning:"钝的；直率的", forms:"blunter / bluntest", derivatives:"bluntly adv. 直率地", similar:"blend v. 混合", antonym:"sharp adj. 锋利的", phrases:["a blunt knife 钝刀","a blunt remark 直率的评论"], examples:[{en:"This knife is blunt.",zh:"这把刀钝了。"},{en:"She is blunt but honest.",zh:"她说话直率但诚实。"}], level:8 },
+  { word:"contempt", phonetic:"/kənˈtempt/", pos:"n.", meaning:"轻蔑；蔑视", forms:"contempts", derivatives:"contemptuous adj. 轻蔑的", similar:"content n. 内容", antonym:"respect n. 尊重", phrases:["show contempt for 蔑视","hold in contempt 轻视"], examples:[{en:"He showed contempt for the rules.",zh:"他对规则表示蔑视。"},{en:"She looked at him with contempt.",zh:"她轻蔑地看着他。"}], level:8 },
+  { word:"delegate", phonetic:"/ˈdelɪɡeɪt/", pos:"v./n.", meaning:"委派；代表", forms:"delegates / delegated / delegating", derivatives:"delegation n. 代表团", similar:"delicate adj. 精致的", antonym:"centralize v. 集中管理", phrases:["delegate tasks 分派任务","delegate authority 授权"], examples:[{en:"Good managers delegate work.",zh:"优秀的管理者会分派工作。"},{en:"The delegates met in Beijing.",zh:"代表们在北京会晤。"}], level:8 },
+  { word:"eradicate", phonetic:"/ɪˈrædɪkeɪt/", pos:"v.", meaning:"根除；消灭", forms:"eradicates / eradicated / eradicating", derivatives:"eradication n. 根除", similar:"radiate v. 辐射", antonym:"spread v. 蔓延", phrases:["eradicate poverty 消除贫困","eradicate disease 消灭疾病"], examples:[{en:"They aim to eradicate poverty.",zh:"他们致力于消除贫困。"},{en:"The disease was eradicated.",zh:"这种疾病已被消灭。"}], level:8 },
+  { word:"formidable", phonetic:"/ˈfɔːrmɪdəbl/", pos:"adj.", meaning:"强大的；令人敬畏的", forms:"more formidable / most formidable", derivatives:"formidably adv. 强大地", similar:"formal adj. 正式的", antonym:"weak adj. 弱小的", phrases:["a formidable rival 强大的对手","a formidable task 艰巨的任务"], examples:[{en:"They face a formidable rival.",zh:"他们面临强大的对手。"},{en:"It was a formidable challenge.",zh:"这是个艰巨的挑战。"}], level:8 },
+  { word:"gauge", phonetic:"/ɡeɪdʒ/", pos:"v./n.", meaning:"测量；判断；计量器", forms:"gauges / gauged / gauging", derivatives:"gauging n. 测量", similar:"gauge n. 标准", antonym:"guess v. 猜测", phrases:["gauge the mood 判断情绪","pressure gauge 压力表"], examples:[{en:"It is hard to gauge his mood.",zh:"很难判断他的情绪。"},{en:"Check the fuel gauge.",zh:"看一下油表。"}], level:8 },
+  { word:"humiliate", phonetic:"/hjuːˈmɪlieɪt/", pos:"v.", meaning:"使羞辱；使丢脸", forms:"humiliates / humiliated / humiliating", derivatives:"humiliation n. 羞辱", similar:"humility n. 谦逊", antonym:"honor v. 尊敬", phrases:["be humiliated 受羞辱","humiliate sb. in public 当众羞辱某人"], examples:[{en:"He was humiliated in public.",zh:"他当众受辱。"},{en:"Don't humiliate your child.",zh:"不要羞辱你的孩子。"}], level:8 },
+  { word:"incentive", phonetic:"/ɪnˈsentɪv/", pos:"n.", meaning:"激励；动机", forms:"incentives", derivatives:"incentivize v. 激励", similar:"inception n. 开端", antonym:"deterrent n. 威慑", phrases:["provide an incentive 提供激励","an incentive to do 做……的动力"], examples:[{en:"Bonuses are a strong incentive.",zh:"奖金是强有力的激励。"},{en:"He has no incentive to change.",zh:"他没有改变的动力。"}], level:8 },
+  { word:"linger", phonetic:"/ˈlɪŋɡər/", pos:"v.", meaning:"逗留；徘徊", forms:"lingers / lingered / lingering", derivatives:"lingering adj. 徘徊的", similar:"finger n. 手指", antonym:"vanish v. 消失", phrases:["linger on 徘徊不去","linger over 慢慢享用"], examples:[{en:"The smell lingered for hours.",zh:"气味萦绕了好几个小时。"},{en:"Don't linger in the cold.",zh:"别在寒冷中逗留。"}], level:8 },
+  { word:"monotonous", phonetic:"/məˈnɑːtənəs/", pos:"adj.", meaning:"单调的；乏味的", forms:"more monotonous / most monotonous", derivatives:"monotony n. 单调", similar:"monument n. 纪念碑", antonym:"varied adj. 多样的", phrases:["a monotonous job 单调的工作","a monotonous voice 单调的声音"], examples:[{en:"The work is monotonous.",zh:"这份工作很单调。"},{en:"His voice was monotonous.",zh:"他的声音很单调。"}], level:8 },
+  { word:"nourish", phonetic:"/ˈnɜːrɪʃ/", pos:"v.", meaning:"滋养；养育", forms:"nourishes / nourished / nourishing", derivatives:"nourishment n. 营养", similar:"flourish v. 繁荣", antonym:"starve v. 使挨饿", phrases:["nourish the body 滋养身体","nourish a hope 怀有希望"], examples:[{en:"Good food nourishes the body.",zh:"好食物滋养身体。"},{en:"She nourished a secret hope.",zh:"她怀着一个隐秘的希望。"}], level:8 },
+  { word:"prone", phonetic:"/proʊn/", pos:"adj.", meaning:"易于……的；俯卧的", forms:"more prone / most prone", derivatives:"proneness n. 倾向", similar:"profound adj. 深刻的", antonym:"resistant adj. 有抵抗力的", phrases:["be prone to 易于……","prone to error 容易出错"], examples:[{en:"He is prone to colds.",zh:"他容易感冒。"},{en:"Elderly people are prone to falls.",zh:"老年人容易跌倒。"}], level:8 },
+  { word:"scrutinize", phonetic:"/ˈskruːtənaɪz/", pos:"v.", meaning:"细看；审查", forms:"scrutinizes / scrutinized / scrutinizing", derivatives:"scrutiny n. 审查", similar:"scrutiny n. 监视", antonym:"ignore v. 忽视", phrases:["scrutinize the data 仔细审查数据","under scrutiny 受到审查"], examples:[{en:"They scrutinized the contract.",zh:"他们仔细审查了合同。"},{en:"The plan came under scrutiny.",zh:"该计划受到审查。"}], level:8 },
+  { word:"thrive", phonetic:"/θraɪv/", pos:"v.", meaning:"繁荣；茁壮成长", forms:"thrives / thrived / thriving", derivatives:"thriving adj. 兴旺的", similar:"thrift n. 节俭", antonym:"decline v. 衰落", phrases:["thrive on 靠……兴旺","thrive in 在……中茁壮成长"], examples:[{en:"Business is thriving.",zh:"生意兴隆。"},{en:"Plants thrive in sunlight.",zh:"植物在阳光下茁壮成长。"}], level:8 },
+
+  // ===== 第 9 关 =====
+  { word:"aptitude", phonetic:"/ˈæptɪtuːd/", pos:"n.", meaning:"天资；才能", forms:"aptitudes", derivatives:"apt adj. 恰当的", similar:"attitude n. 态度", antonym:"inaptitude n. 无能", phrases:["an aptitude for 对……的天赋","aptitude test 能力倾向测试"], examples:[{en:"She has an aptitude for music.",zh:"她有音乐天赋。"},{en:"He took an aptitude test.",zh:"他参加了能力测试。"}], level:9 },
+  { word:"bizarre", phonetic:"/bɪˈzɑːr/", pos:"adj.", meaning:"奇异的；离奇的", forms:"more bizarre / most bizarre", derivatives:"bizarrely adv. 古怪地", similar:"bazaar n. 集市", antonym:"normal adj. 正常的", phrases:["a bizarre story 离奇的故事","bizarre behavior 古怪的行为"], examples:[{en:"It was a bizarre coincidence.",zh:"这是个离奇的巧合。"},{en:"His behavior was bizarre.",zh:"他的行为很古怪。"}], level:9 },
+  { word:"concede", phonetic:"/kənˈsiːd/", pos:"v.", meaning:"承认；让步", forms:"concedes / conceded / conceding", derivatives:"concession n. 让步", similar:"conceive v. 构想", antonym:"deny v. 否认", phrases:["concede defeat 认输","concede that 承认"], examples:[{en:"He conceded defeat gracefully.",zh:"他体面地认输了。"},{en:"She conceded that she was wrong.",zh:"她承认自己错了。"}], level:9 },
+  { word:"deficiency", phonetic:"/dɪˈfɪʃnsi/", pos:"n.", meaning:"缺乏；缺陷", forms:"deficiencies", derivatives:"deficient adj. 缺乏的", similar:"efficiency n. 效率", antonym:"surplus n. 过剩", phrases:["vitamin deficiency 维生素缺乏","a deficiency in 在……方面的不足"], examples:[{en:"Vitamin deficiency causes illness.",zh:"维生素缺乏会导致疾病。"},{en:"The report found several deficiencies.",zh:"报告发现了几处缺陷。"}], level:9 },
+  { word:"elusive", phonetic:"/iˈluːsɪv/", pos:"adj.", meaning:"难以捉摸的；难找到的", forms:"more elusive / most elusive", derivatives:"elude v. 躲避", similar:"exclusive adj. 独有的", antonym:"obvious adj. 明显的", phrases:["an elusive goal 难以实现的目标","an elusive answer 难以找到的答案"], examples:[{en:"Success proved elusive.",zh:"成功难以捉摸。"},{en:"The bird is shy and elusive.",zh:"这种鸟胆小难寻。"}], level:9 },
+  { word:"futile", phonetic:"/ˈfjuːtl/", pos:"adj.", meaning:"徒劳的；无效的", forms:"more futile / most futile", derivatives:"futility n. 徒劳", similar:"fertile adj. 肥沃的", antonym:"effective adj. 有效的", phrases:["a futile attempt 徒劳的尝试","it is futile to 做……是徒劳的"], examples:[{en:"The attempt proved futile.",zh:"这一尝试徒劳无功。"},{en:"It is futile to argue with him.",zh:"和他争论是徒劳的。"}], level:9 },
+  { word:"gigantic", phonetic:"/dʒaɪˈɡæntɪk/", pos:"adj.", meaning:"巨大的；庞大的", forms:"more gigantic / most gigantic", derivatives:"giant n. 巨人", similar:"gigantic adj. 巨大的", antonym:"tiny adj. 微小的", phrases:["a gigantic wave 巨浪","a gigantic task 巨大的任务"], examples:[{en:"A gigantic wave hit the shore.",zh:"巨浪拍打着海岸。"},{en:"It was a gigantic effort.",zh:"这是巨大的努力。"}], level:9 },
+  { word:"hazardous", phonetic:"/ˈhæzərdəs/", pos:"adj.", meaning:"危险的；有害的", forms:"more hazardous / most hazardous", derivatives:"hazard n. 危险", similar:"haphazard adj. 随意的", antonym:"safe adj. 安全的", phrases:["hazardous waste 危险废物","hazardous conditions 危险的环境"], examples:[{en:"Smoking is hazardous to health.",zh:"吸烟有害健康。"},{en:"They work in hazardous conditions.",zh:"他们在危险的环境中工作。"}], level:9 },
+  { word:"impede", phonetic:"/ɪmˈpiːd/", pos:"v.", meaning:"妨碍；阻碍", forms:"impedes / impeded / impeding", derivatives:"impediment n. 障碍", similar:"impend v. 逼近", antonym:"assist v. 帮助", phrases:["impede progress 阻碍进展","impede traffic 阻碍交通"], examples:[{en:"Heavy snow impeded traffic.",zh:"大雪阻碍了交通。"},{en:"Fear can impede learning.",zh:"恐惧会妨碍学习。"}], level:9 },
+  { word:"lucrative", phonetic:"/ˈluːkrətɪv/", pos:"adj.", meaning:"有利可图的", forms:"more lucrative / most lucrative", derivatives:"lucre n. 钱财", similar:"lubricate v. 润滑", antonym:"unprofitable adj. 不赚钱的", phrases:["a lucrative business 赚钱的生意","a lucrative career 高薪职业"], examples:[{en:"It is a lucrative business.",zh:"这是门赚钱的生意。"},{en:"She left for a more lucrative job.",zh:"她为一份薪水更高的工作离开了。"}], level:9 },
+  { word:"mediocre", phonetic:"/ˌmiːdiˈoʊkər/", pos:"adj.", meaning:"平庸的；普通的", forms:"more mediocre / most mediocre", derivatives:"mediocrity n. 平庸", similar:"medium adj. 中等的", antonym:"excellent adj. 优秀的", phrases:["a mediocre performance 平庸的表现","mediocre quality 平庸的质量"], examples:[{en:"The film received mediocre reviews.",zh:"这部电影评价平平。"},{en:"He was a mediocre student.",zh:"他成绩平平。"}], level:9 },
+  { word:"nuisance", phonetic:"/ˈnuːsns/", pos:"n.", meaning:"麻烦事；讨厌的人", forms:"nuisances", derivatives:"annoyance n. 烦恼", similar:"nuance n. 细微差别", antonym:"pleasure n. 乐事", phrases:["a real nuisance 真麻烦","public nuisance 公害"], examples:[{en:"The noise is a real nuisance.",zh:"这噪音真麻烦。"},{en:"Stop being a nuisance.",zh:"别讨人嫌了。"}], level:9 },
+  { word:"pertinent", phonetic:"/ˈpɜːrtnənt/", pos:"adj.", meaning:"相关的；恰当的", forms:"more pertinent / most pertinent", derivatives:"pertinence n. 相关性", similar:"permanent adj. 永久的", antonym:"irrelevant adj. 不相关的", phrases:["pertinent information 相关信息","pertinent to 与……相关"], examples:[{en:"Please give pertinent details.",zh:"请提供相关细节。"},{en:"His comment was not pertinent.",zh:"他的评论文不对题。"}], level:9 },
+  { word:"sabotage", phonetic:"/ˈsæbətaːʒ/", pos:"v./n.", meaning:"破坏；蓄意破坏", forms:"sabotages / sabotaged / sabotaging", derivatives:"saboteur n. 破坏者", similar:"savage adj. 野蛮的", antonym:"safeguard v. 保护", phrases:["sabotage the plan 破坏计划","an act of sabotage 破坏行动"], examples:[{en:"Someone sabotaged the machine.",zh:"有人破坏了机器。"},{en:"The talks were sabotaged.",zh:"会谈遭到破坏。"}], level:9 },
+  { word:"tangible", phonetic:"/ˈtændʒəbl/", pos:"adj.", meaning:"有形的；明确的", forms:"more tangible / most tangible", derivatives:"tangibly adv. 明确地", similar:"tangle v. 纠缠", antonym:"intangible adj. 无形的", phrases:["tangible benefits 实际好处","tangible results 实实在在的成果"], examples:[{en:"We need tangible results.",zh:"我们需要实实在在的成果。"},{en:"There are tangible benefits.",zh:"有实际的好处。"}], level:9 },
+  // ===== 第 10 关（最生僻、最难） =====
+  { word:"arbitrary", phonetic:"/ˈɑːrbɪtreri/", pos:"adj.", meaning:"任意的；专断的", forms:"more arbitrary / most arbitrary", derivatives:"arbitrarily adv. 任意地", similar:"auxiliary adj. 辅助的", antonym:"rational adj. 合理的", phrases:["an arbitrary decision 武断的决定","arbitrary rules 任意的规则"], examples:[{en:"The choice was arbitrary.",zh:"这个选择是随意的。"},{en:"He made an arbitrary decision.",zh:"他做出了武断的决定。"}], level:10 },
+  { word:"bolster", phonetic:"/ˈboʊlstər/", pos:"v.", meaning:"支持；加强", forms:"bolsters / bolstered / bolstering", derivatives:"bolster n. 长枕", similar:"bluster v. 咆哮", antonym:"weaken v. 削弱", phrases:["bolster confidence 增强信心","bolster the economy 提振经济"], examples:[{en:"The news bolstered confidence.",zh:"这则消息增强了信心。"},{en:"They tried to bolster sales.",zh:"他们试图提振销量。"}], level:10 },
+  { word:"cumbersome", phonetic:"/ˈkʌmbərsəm/", pos:"adj.", meaning:"笨重的；麻烦的", forms:"more cumbersome / most cumbersome", derivatives:"cumbersomely adv. 笨重地", similar:"cucumber n. 黄瓜", antonym:"handy adj. 便利的", phrases:["a cumbersome process 繁琐的流程","cumbersome equipment 笨重的设备"], examples:[{en:"The process is cumbersome.",zh:"这个流程很繁琐。"},{en:"It is a cumbersome machine.",zh:"这是台笨重的机器。"}], level:10 },
+  { word:"detrimental", phonetic:"/ˌdetrɪˈmentl/", pos:"adj.", meaning:"有害的；不利的", forms:"more detrimental / most detrimental", derivatives:"detriment n. 损害", similar:"detrimental adj. 有害的", antonym:"beneficial adj. 有益的", phrases:["detrimental to 对……有害","detrimental effects 有害影响"], examples:[{en:"Stress is detrimental to health.",zh:"压力有害健康。"},{en:"It had a detrimental effect.",zh:"它产生了不利影响。"}], level:10 },
+  { word:"eccentric", phonetic:"/ɪkˈsentrɪk/", pos:"adj.", meaning:"古怪的；反常的", forms:"more eccentric / most eccentric", derivatives:"eccentricity n. 古怪", similar:"concentric adj. 同心的", antonym:"conventional adj. 常规的", phrases:["an eccentric old man 古怪的老人","eccentric behavior 古怪的行为"], examples:[{en:"He is a bit eccentric.",zh:"他有点古怪。"},{en:"She has eccentric habits.",zh:"她有些古怪的习惯。"}], level:10 },
+  { word:"frugal", phonetic:"/ˈfruːɡl/", pos:"adj.", meaning:"节俭的；朴素的", forms:"more frugal / most frugal", derivatives:"frugality n. 节俭", similar:"fragile adj. 易碎的", antonym:"wasteful adj. 浪费的", phrases:["a frugal lifestyle 节俭的生活方式","a frugal meal 简单的一餐"], examples:[{en:"They live a frugal life.",zh:"他们过着节俭的生活。"},{en:"She is frugal with money.",zh:"她花钱很节省。"}], level:10 },
+  { word:"gloomy", phonetic:"/ˈɡluːmi/", pos:"adj.", meaning:"阴暗的；忧郁的", forms:"gloomier / gloomiest", derivatives:"gloom n. 忧郁", similar:"gloomily adv. 忧郁地", antonym:"cheerful adj. 开朗的", phrases:["a gloomy day 阴郁的一天","a gloomy mood 阴郁的心情"], examples:[{en:"It was a gloomy morning.",zh:"那是个阴沉的早晨。"},{en:"He looked gloomy.",zh:"他看起来闷闷不乐。"}], level:10 },
+  { word:"hypocrisy", phonetic:"/hɪˈpɑːkrəsi/", pos:"n.", meaning:"虚伪；伪善", forms:"hypocrisies", derivatives:"hypocritical adj. 虚伪的", similar:"hypothesis n. 假设", antonym:"sincerity n. 真诚", phrases:["outright hypocrisy 十足的虚伪","the hypocrisy of ……的虚伪"], examples:[{en:"He hated their hypocrisy.",zh:"他讨厌他们的虚伪。"},{en:"It was pure hypocrisy.",zh:"那纯粹是虚伪。"}], level:10 },
+  { word:"imperative", phonetic:"/ɪmˈperətɪv/", pos:"adj./n.", meaning:"迫切的；必要的；命令", forms:"more imperative / most imperative", derivatives:"imperatively adv. 命令地", similar:"imperial adj. 帝国的", antonym:"optional adj. 可选的", phrases:["it is imperative that 必须……","an imperative need 迫切需要"], examples:[{en:"It is imperative that we act now.",zh:"我们必须立即行动。"},{en:"Safety is imperative.",zh:"安全至关重要。"}], level:10 },
+  { word:"lament", phonetic:"/ləˈment/", pos:"v./n.", meaning:"哀叹；悲悼", forms:"laments / lamented / lamenting", derivatives:"lamentation n. 悲叹", similar:"lamentable adj. 令人遗憾的", antonym:"rejoice v. 欣喜", phrases:["lament the loss 哀叹损失","lament over 为……哀叹"], examples:[{en:"They lamented the loss.",zh:"他们哀叹这一损失。"},{en:"He lamented his bad luck.",zh:"他哀叹自己运气不好。"}], level:10 },
+  { word:"meticulous", phonetic:"/məˈtɪkjələs/", pos:"adj.", meaning:"一丝不苟的；细致的", forms:"more meticulous / most meticulous", derivatives:"meticulously adv. 细致地", similar:"ridiculous adj. 荒谬的", antonym:"careless adj. 粗心的", phrases:["meticulous attention 一丝不苟的关注","meticulous planning 周密的计划"], examples:[{en:"She is meticulous about details.",zh:"她对细节一丝不苟。"},{en:"He kept meticulous records.",zh:"他记录得极为细致。"}], level:10 },
+  { word:"nostalgia", phonetic:"/nɑːˈstældʒə/", pos:"n.", meaning:"怀旧；思乡", forms:"nostalgias", derivatives:"nostalgic adj. 怀旧的", similar:"analgesia n. 止痛", antonym:"indifference n. 淡漠", phrases:["a sense of nostalgia 怀旧之情","nostalgia for 对……的怀念"], examples:[{en:"The song filled me with nostalgia.",zh:"这首歌让我满怀怀旧之情。"},{en:"He felt nostalgia for his hometown.",zh:"他思念家乡。"}], level:10 },
+  { word:"predicament", phonetic:"/prɪˈdɪkəmənt/", pos:"n.", meaning:"困境；窘境", forms:"predicaments", derivatives:"predicament n. 处境", similar:"predicate v. 断言", antonym:"solution n. 出路", phrases:["in a predicament 陷入困境","a difficult predicament 艰难的处境"], examples:[{en:"She was in a predicament.",zh:"她陷入了困境。"},{en:"We must solve this predicament.",zh:"我们必须解决这一困境。"}], level:10 },
+  { word:"relinquish", phonetic:"/rɪˈlɪŋkwɪʃ/", pos:"v.", meaning:"放弃；交出", forms:"relinquishes / relinquished / relinquishing", derivatives:"relinquishment n. 放弃", similar:"relish v. 喜爱", antonym:"retain v. 保留", phrases:["relinquish control 交出控制权","relinquish a claim 放弃要求"], examples:[{en:"He relinquished his post.",zh:"他辞去了职务。"},{en:"She refused to relinquish control.",zh:"她拒绝交出控制权。"}], level:10 },
+  { word:"stagnant", phonetic:"/ˈstæɡnənt/", pos:"adj.", meaning:"停滞的；不流动的", forms:"more stagnant / most stagnant", derivatives:"stagnation n. 停滞", similar:"stagnant adj. 死水的", antonym:"dynamic adj. 有活力的", phrases:["a stagnant economy 停滞的经济","stagnant water 死水"], examples:[{en:"The economy remained stagnant.",zh:"经济停滞不前。"},{en:"Mosquitoes breed in stagnant water.",zh:"蚊子在水洼中繁殖。"}], level:10 },
 ];
